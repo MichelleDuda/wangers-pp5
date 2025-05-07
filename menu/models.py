@@ -13,11 +13,21 @@ class Category(models.Model):
         return self.name
 
 class Sauce(models.Model):
+    SPICE_LEVEL_CHOICES = [
+        ('none', 'None'),
+        ('mild', 'Mild'),
+        ('medium', 'Medium'),
+        ('hot', 'Hot'),
+        ('extra-hot', 'Extra Hot'),
+    ]
+     
     name = models.CharField(max_length=100)
     friendly_name = models.CharField(max_length=100, null=True, blank=True)
+    spice_level = models.CharField(max_length=20, choices=SPICE_LEVEL_CHOICES, default='none')
 
     def __str__(self):
         return self.name
+
 
 class DietaryRestriction(models.Model):
     name = models.CharField(max_length=50)
@@ -38,21 +48,12 @@ class MenuItem(models.Model):
         ('beverage', 'Beverage')
     ]
 
-    SPICE_LEVEL_CHOICES = [
-        ('none', 'None'),
-        ('mild', 'Mild'),
-        ('medium', 'Medium'),
-        ('hot', 'Hot'),
-        ('extra-hot', 'Extra Hot'),
-    ]
-
     name = models.CharField(max_length=100)
     description = models.TextField(blank=True)
     item_type = models.CharField(max_length=20, choices=TYPE_CHOICES)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     sauces = models.ManyToManyField(Sauce, blank=True)
     dietary_restriction = models.ManyToManyField(DietaryRestriction, blank=True)
-    spice_level = models.CharField(max_length=20, choices=SPICE_LEVEL_CHOICES, default='none')
     price = models.DecimalField(max_digits=6, decimal_places=2)
     is_available = models.BooleanField(default=True)
     is_featured = models.BooleanField(default=False)
