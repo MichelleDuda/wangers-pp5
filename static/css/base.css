@@ -1,13 +1,37 @@
+
+/* General Styles */
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
 html {
     height: 100%;
 }
 
 body {
-    background: url('/media/background.jpg') no-repeat center center fixed;
-    background-size: cover;
-    height: calc(100vh - 164px);
+    height: calc(100vh - 188px);
     color: #555;
     font-family: 'Lato';
+}
+
+main {
+    margin-top: 188px;
+    margin-bottom: 10px;
+    overflow: hidden;
+}
+
+/* Header Styles */
+header {
+    background-color: #F59E13;
+}
+
+/* Navbar styles */
+#navbar-toggler {
+top: 10px; 
+right: 15px; 
+z-index: 1000;
 }
 
 /* from Bulma */
@@ -28,14 +52,15 @@ body {
 }
 
 .logo-img-square {
-    width: 164px;
-    height: 164px;
+    width: 120px;
+    height: 120px;
     object-fit: cover;
   }
 
 .shop-now-button {
     background: black;
     color: white;
+    border: 2px solid white;
     min-width: 260px;
 }
 
@@ -68,23 +93,31 @@ body {
     background: url('/media/hero.jpg') no-repeat center center / cover;
     width: 100%;
     position: relative;
-    height: 600px;
+    height: 450px;
 }
 
 #hero-cover-text {
-    /* final rgba value sets the opacity so it is semi-transparent */
-    background-color: rgba(0, 0, 0, 0.5);
+    background: #00000091;
     color: white;
-    font-size: 100%;
-    text-align: right;
+    font-size: 125%; 
+    text-align: center;
     position: absolute;
-    right: 0;
-    bottom: 30px;
-    width: 80%;
-    min-height: 200px;
-    padding-top: 40px;
-    padding-bottom: 25px;
-    padding-right: 10px;
+    width: 100%;
+    height: 100%;
+    display: flex; 
+    flex-direction: column;
+    align-items: center; 
+    justify-content: center; 
+    padding: 40px 10px 25px;
+    text-shadow:
+        -1px -1px 0 #000,
+         1px -1px 0 #000,
+        -1px  1px 0 #000,
+         1px  1px 0 #000;
+}
+
+#hero-cover-text h2 {
+    font-size: 3em;
 }
 
 /* -------------------------------- Media Queries */
@@ -98,15 +131,21 @@ body {
 
 /* fixed top navbar only on medium and up */
 @media (min-width: 992px) {
-    .fixed-top-desktop-only {
-        position: fixed;
-        top: 0;
-        right: 0;
-        left: 0;
-        z-index: 1030;
-    }
-
     .header-container {
         padding-top: 164px;
     }
+
+    header {
+        background-color: #F59E13;
+        height: 188px;
+        z-index: 99;
+        position: fixed;
+    }
+
+    .logo-img-square {
+        width: 164px;
+        height: 164px;
+        object-fit: cover;
+      }
+    
 }
