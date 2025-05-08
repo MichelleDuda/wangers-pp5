@@ -58,10 +58,11 @@ class MenuItem(models.Model):
     is_available = models.BooleanField(default=True)
     is_featured = models.BooleanField(default=False)
     image_url = models.URLField(max_length=1024, null=True, blank=True)
-    image = models.ImageField( blank=True, null=True)
+    image = models.ImageField(blank=True, null=True)
 
     def __str__(self):
         return self.name
+
 
 class AddOn(models.Model):
     name = models.CharField(max_length=100)

@@ -1,22 +1,22 @@
 from django.shortcuts import render, get_object_or_404
-from .models import MenuItem
+from .models import MenuItem, Category
+from collections import defaultdict
 # Create your views here.
 
 
 def all_menu_items(request):
-    ''' A view to return the menu items'''
+    categories = Category.objects.all()
+    items_by_category = []
 
-    from collections import defaultdict
+    for category in categories:
+        menu_items = MenuItem.objects.filter(category=category, is_available=True)
+        if menu_items.exists():
+            items_by_category.append((category, menu_items))
 
-    items_by_type = defaultdict(list)
-    all_items = MenuItem.objects.all().order_by('item_type')
-
-    for item in all_items:
-        items_by_type[item.item_type].append(item)
-
-    return render(request, 'menu/menu.html', {
-        'items_by_type': dict(items_by_type),
-    })
+    context = {
+        'items_by_category': items_by_category,
+    }
+    return render(request, 'menu/menu.html', context)
 
 
 def menu_item_detail(request, menu_item_id):
