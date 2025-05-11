@@ -7,7 +7,7 @@
 {% block content %}
 <div class="container my-5">
     <div class="row">
-        <div class="menu-detail-image-container">
+        <div class="col-md-4 order-md-1 mb-4 mb-md-0 menu-detail-image-container">
         <!-- Image -->
         {% if menu_item.image %}
             <a href="{% url 'menu_item_detail' menu_item.id %}">
@@ -21,7 +21,7 @@
         </div>
 
         <!-- Details -->
-        <div class="col-md-6">
+        <div class="col-md-8 order-md-2">
             <h2 class="mb-3">{{ menu_item.name }}</h2>
             <p class="text-muted">{{ menu_item.description }}</p>
             <p><strong>Price:</strong> ${{ menu_item.price }}</p>
@@ -32,61 +32,61 @@
                     {% endfor %}
                 </p>
             {% endif %}
+
+            <form method="post" action="{% url 'add_to_cart' menu_item.id %}">
+                {% csrf_token %}
+                <div class="form-row">
+
+                    <!-- Sauce Selection -->
+                    {% if sauces %}
+                    <div class="form-group">
+                        <label for="sauce">Choose a Sauce:</label>
+                        <select name="sauce" id="sauce" class="form-control">
+                            {% for sauce in sauces %}
+                                <option value="{{ sauce.id }}">{{ sauce.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    {% endif %}
+
+                    <!-- Add-ons -->
+                    {% if addons %}
+                    <div class="form-group mt-3">
+                        <label>Add-ons:</label><br>
+                        {% for addon in addons %}
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" name="addons" value="{{ addon.id }}" id="addon{{ addon.id }}">
+                                <label class="form-check-label" for="addon{{ addon.id }}">
+                                    {{ addon.name }} (+${{ addon.price }})
+                                </label>
+                            </div>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+
+                    <!-- Quanitity Selection -->
+                    <div class="col-12">
+                        <p class="mt-3"><strong>Quantity:</strong></p>
+                        <div class="form-group w-50">
+                            <div class="input-group">
+                                <input class="form-control qty_input" type="number" name="quantity" value="1" min="1" max="99" data-item_id="{{ menu_item.id }}" id="id_qty_{{ menu_item.id }}">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <a href="{% url 'menu' %}" class="btn rounded-0 mt-5">
+                            <span class="icon">
+                                <i class="fas fa-chevron-left"></i>
+                            </span>
+                            <span class="text-uppercase">Keep Shopping</span>
+                        </a>
+                        <input type="submit" class="btn btn-black rounded-0 text-uppercase mt-5" value="Add to Cart">
+                    </div>
+                    <input type="hidden" name="redirect_url" value="{{ request.path }}">
+                </div>
+            </form>
         </div>
     </div>
-
-    <form method="post" action="{% url 'add_to_cart' menu_item.id %}">
-        {% csrf_token %}
-        <div class="form-row">
-            <div class="col-12">
-                <p class="mt-3"><strong>Quantity:</strong></p>
-                <div class="form-group w-50">
-                    <div class="input-group">
-                        <input class="form-control qty_input" type="number" name="quantity" value="1" min="1" max="99" data-item_id="{{ menu_item.id }}" id="id_qty_{{ menu_item.id }}">
-                    </div>
-                </div>
-            </div>
-            <div class="col-12">
-                <a href="{% url 'menu' %}" class="btn rounded-0 mt-5">
-                    <span class="icon">
-                        <i class="fas fa-chevron-left"></i>
-                    </span>
-                    <span class="text-uppercase">Keep Shopping</span>
-                </a>
-                <input type="submit" class="btn btn-black rounded-0 text-uppercase mt-5" value="Add to Bag">
-            </div>
-            <input type="hidden" name="redirect_url" value="{{ request.path }}">
-        </div>
-
-        <!-- Sauce Selection -->
-        {% if sauces %}
-        <div class="form-group">
-            <label for="sauce">Choose a Sauce:</label>
-            <select name="sauce" id="sauce" class="form-control">
-                {% for sauce in sauces %}
-                    <option value="{{ sauce.id }}">{{ sauce.name }}</option>
-                {% endfor %}
-            </select>
-        </div>
-        {% endif %}
-
-        <!-- Add-ons -->
-        {% if addons %}
-        <div class="form-group mt-3">
-            <label>Add-ons:</label><br>
-            {% for addon in addons %}
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" name="addons" value="{{ addon.id }}" id="addon{{ addon.id }}">
-                    <label class="form-check-label" for="addon{{ addon.id }}">
-                        {{ addon.name }} (+${{ addon.price }})
-                    </label>
-                </div>
-            {% endfor %}
-        </div>
-        {% endif %}
-
-        <button type="submit" class="btn btn-primary mt-4">Add to Cart</button>
-    </form>
 
 </div>
 {% endblock %}

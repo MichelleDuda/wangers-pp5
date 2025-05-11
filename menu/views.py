@@ -23,9 +23,13 @@ def menu_item_detail(request, menu_item_id):
     ''' A view to return an individual menu items details'''
 
     menu_item = get_object_or_404(MenuItem, pk=menu_item_id)
+    sauces = menu_item.sauces.all()
+    addons = menu_item.add_ons.all()
 
     context = {
         'menu_item': menu_item,
+        'sauces': sauces,
+        'addons': addons,
     }
 
     return render(request, 'menu/menu_item_detail.html', context)
