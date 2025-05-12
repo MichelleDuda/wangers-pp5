@@ -136,6 +136,12 @@ z-index: 1000;
     object-fit: cover;
 }
 
+/*Cart Page Styling */
+.update-link,
+.remove-item {
+    cursor: pointer;
+}
+
 /* -------------------------------- Media Queries */
 
 /* Slightly larger container on xl screens */
