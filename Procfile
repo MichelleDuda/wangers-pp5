@@ -1,1 +1,1 @@
-web: gunicorn wangers-pp5.wsgi
+web: gunicorn wangers_pp5.wsgi
