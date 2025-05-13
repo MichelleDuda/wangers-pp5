@@ -1,0 +1,1 @@
+web: gunicorn wangers-pp5.wsgi
