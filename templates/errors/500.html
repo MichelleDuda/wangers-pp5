@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% load custom_filters %}
+{% block content %}
+
+<div class="container-fluid">
+    <div class="row mx-auto text-center">
+        <div class="card p-5">
+            <div class="card-body">
+                <h1>500 - Server Error</h1>
+                <p>Oops! Something went wrong on our end. Please try again later.</p>
+                <a href="{% url 'home' %}">Go back to Home</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}
