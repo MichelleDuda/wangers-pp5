@@ -96,7 +96,7 @@ z-index: 1000;
     height: 450px;
 }
 
-#hero-cover-text {
+#hero-cover-text, #error404-cover-text {
     background: #00000091;
     color: white;
     font-size: 125%; 
@@ -149,6 +149,8 @@ z-index: 1000;
     position: relative;
     height: 450px;
 }
+
+/* Styling for error404-cover-text is the same as hero-cover-text */
 
 /* -------------------------------- Media Queries */
 
