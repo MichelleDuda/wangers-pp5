@@ -8,31 +8,53 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col text-center mt-3">
-            <h2 class="logo-font">Menu Items</h2>
+            <h2 class="logo-font">Wingin It: The Official Menu!</h2>
             <hr class="w-50 mx-auto mb-1">
         </div>
     </div>
 
-    <div class="row">
-        <div class ="col d-flex justify-content-end"
+    <!-- Search Bar & Filter -->
+    <div class="row justify-content-center align-items-center my-4">
+        <!-- Filter Dropdown (Left Column) -->
+        <div class="col-md-3 text-md-left mb-2 mb-md-0">
+            <div class="dropdown">
+                <button class="btn btn-outline-dark dropdown-toggle w-100" type="button" id="filterDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Filter
+                </button>
+                <div class="dropdown-menu w-100" aria-labelledby="filterDropdown">
+                    <a class="dropdown-item" href="#">All</a>
+                    <a class="dropdown-item" href="#">Gluten-Free</a>
+                    <a class="dropdown-item" href="#">Vegan</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Middle Placeholder (Center Column) -->
+        <div class="col-md-3 text-center d-none d-md-block">
+            <!-- Placeholder for spacing or future use -->
+        </div>
+
+        <!-- Search Bar (Right Column) -->
+        <div class="col-md-3">
             <form method="GET" action="">
-                    <div class="input-group w-100">
-                        <input class="form-control border border-black rounded-0" type="text" name="q"
-                            placeholder="Search">
-                        <div class="input-group-append">
-                            <button class="form-control btn btn-black border border-black rounded-0" type="submit">
+                <div class="input-group">
+                    <input class="form-control border border-black rounded-0" type="text" name="q"
+                        placeholder="Search">
+                    <div class="input-group-append">
+                        <button class="form-control btn btn-black border border-black rounded-0" type="submit">
                             <span class="icon">
                                 <i class="fas fa-search"></i>
                             </span>
-                            </button>
-                        </div>
+                        </button>
                     </div>
+                </div>
             </form>
         </div>
-
     </div>
 
+
     {% for category, menu_items in items_by_category %}
+    <section class="category-section">
         <div class="row mt-5">
             <div class="col text-center">
                 <h3 class="text-uppercase">
@@ -85,6 +107,7 @@
                 {% endif %}
             {% endfor %}
         </div>
+    </section>
     {% endfor %}
 </div>
 {% endblock %}
