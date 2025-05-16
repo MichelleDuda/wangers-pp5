@@ -34,6 +34,48 @@ right: 15px;
 z-index: 1000;
 }
 
+/* Footer styles */
+footer {
+    border-top: 2px dotted #dfcfdc;
+    padding-top: 25px;
+    background: linear-gradient(to bottom, #2f4f4f, #1b2e2e);
+    color: white;
+}
+
+footer p {
+    margin-bottom: 0;
+}
+
+#hours {
+    display: flex;
+    justify-content: center;
+}
+
+#days {
+    padding: 0 10px 0 0;
+    text-align: left;
+}
+
+.middle-container {
+    text-align: center;
+    justify-content: center;
+}
+
+#social-networks {
+    text-align: center;
+    padding: 20px 0;
+    display: flex;
+    justify-content: space-evenly;
+    list-style-type: none;
+}
+
+#social-networks i {
+    font-size: 160%;
+    padding: 5%;
+    color: white;
+}
+
+
 /* from Bulma */
 .icon {
     align-items: center;
@@ -270,4 +312,21 @@ z-index: 1000;
         object-fit: cover;
       }
     
+}
+@media (min-width: 768px) {
+    #footer-container {
+        display: flex;
+        flex-direction: row;
+        flex-basis: 33.333%;
+        justify-content: space-evenly;
+    }
+
+    /* rearranges order of footer sections for better symmetry */
+    .middle-container {
+        order: 3;
+    }
+
+    #social-networks {
+        flex-direction: column;
+    }
 }
