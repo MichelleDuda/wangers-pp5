@@ -109,7 +109,11 @@
 
   <main class="flex-shrink-0 main-bg">
       {% if messages %}
-        <div class="message-container"></div>
+        <div class="message-container">
+          {% for message in messages %}
+            <div class="alert alert-info">{{ message }}</div>
+        {% endfor %}
+        </div>
       {% endif %}
 
       {% block page_header %}
