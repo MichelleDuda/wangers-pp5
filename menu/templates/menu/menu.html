@@ -22,9 +22,10 @@
                     Filter
                 </button>
                 <div class="dropdown-menu w-100" aria-labelledby="filterDropdown">
-                    <a class="dropdown-item" href="#">All</a>
-                    <a class="dropdown-item" href="#">Gluten-Free</a>
-                    <a class="dropdown-item" href="#">Vegan</a>
+                    <a class="dropdown-item" href="{% url 'menu' %}">All Menu Items</a>
+                    <a class="dropdown-item" href="{% url 'menu' %}?dietary_restriction=gluten_free">Gluten-Free</a>
+                    <a class="dropdown-item" href="{% url 'menu' %}?dietary_restriction=vegan">Vegan</a>
+                    <a class="dropdown-item" href="{% url 'menu' %}?dietary_restriction=vegetarian">Vegetarian</a>
                 </div>
             </div>
         </div>
@@ -36,7 +37,7 @@
 
         <!-- Search Bar (Right Column) -->
         <div class="col-md-3">
-            <form method="GET" action="">
+            <form method="GET" action="{% url 'menu' %}">
                 <div class="input-group">
                     <input class="form-control border border-black rounded-0" type="text" name="q"
                         placeholder="Search">

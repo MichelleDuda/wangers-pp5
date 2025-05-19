@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse
 from django.contrib import messages
-from .models import MenuItem, Category
+from .models import MenuItem, Category, DietaryRestriction
 from django.db.models import Q
 from collections import defaultdict
 from django.utils.safestring import mark_safe
@@ -13,8 +13,13 @@ def all_menu_items(request):
     query = None
     categories = Category.objects.all()
     items_by_category = []
+    dietary_restrictions = None
 
     if request.GET:
+        if 'dietary_restriction' in request.GET:
+            restriction_names = request.GET['dietary_restriction'].split(',')
+            dietary_restrictions = DietaryRestriction.objects.filter(name__in=restriction_names)
+
         if 'q' in request.GET:
             query = request.GET['q']
             if not query:
@@ -23,6 +28,10 @@ def all_menu_items(request):
 
     for category in categories:
         menu_items = MenuItem.objects.filter(category=category, is_available=True)
+
+        if dietary_restrictions:
+            restriction_ids = dietary_restrictions.values_list('id', flat=True)
+            menu_items = menu_items.filter(dietary_restriction__in=restriction_ids)
 
         if query:
             search_filter = Q(name__icontains=query) | Q(description__icontains=query)
@@ -41,6 +50,7 @@ def all_menu_items(request):
     context = {
         'items_by_category': items_by_category,
         'search_term': query,
+        'current_restrictions': dietary_restrictions,
     }
 
     return render(request, 'menu/menu.html', context)
