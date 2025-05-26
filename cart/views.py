@@ -1,4 +1,8 @@
+from decimal import Decimal
 from django.shortcuts import render, redirect, get_object_or_404, reverse, HttpResponse
+from django.conf import settings
+from django.http import JsonResponse
+from django.views.decorators.http import require_POST
 from menu.models import MenuItem
 
 # Create your views here.
@@ -80,3 +84,42 @@ def remove_from_cart(request, item_id):
     except Exception as e:
         print(f"Error: {e}")
         return HttpResponse(status=500)
+    
+
+@require_POST
+def update_delivery_method(request):
+    """Update delivery cost based on selected delivery method at checkout."""
+    method = request.POST.get('delivery_method', 'pickup')
+    cart = request.session.get('cart', {})
+    total = 0
+
+    # Calculate total cart value
+    for key, item_data in cart.items():
+        parts = key.split('_')
+        item_id = int(parts[0])
+        quantity = item_data.get('quantity', 1)
+
+        try:
+            menu_item = MenuItem.objects.get(pk=item_id)
+            total += quantity * menu_item.price
+        except MenuItem.DoesNotExist:
+            continue 
+
+    # Determine delivery cost
+    if method == 'pickup':
+        delivery_cost = 0
+    else:
+        if total < settings.FREE_DELIVERY_THRESHOLD:
+            delivery_cost = total * Decimal(settings.STANDARD_DELIVERY_PERCENTAGE / 100)
+        else:
+            delivery_cost = Decimal('0.00')
+
+    # Store values in session
+    request.session['delivery_method'] = method
+    request.session['delivery_cost'] = float(delivery_cost)
+
+    return JsonResponse({
+        'success': True,
+        'delivery_method': method,
+        'delivery_cost': str(delivery_cost),
+    })

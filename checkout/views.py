@@ -1,3 +1,4 @@
+from decimal import Decimal
 from django.shortcuts import render, redirect, reverse, get_object_or_404
 from django.contrib import messages
 from .forms import OrderForm
@@ -11,6 +12,7 @@ import stripe
 def checkout(request):
     stripe_public_key = settings.STRIPE_PUBLIC_KEY
     stripe_secret_key = settings.STRIPE_SECRET_KEY
+    order = None
 
     if request.method == 'POST':
         cart = request.session.get('cart', {})
@@ -19,15 +21,29 @@ def checkout(request):
             'full_name': request.POST['full_name'],
             'email': request.POST['email'],
             'phone_number': request.POST['phone_number'],
-            'postcode': request.POST['postcode'],
-            'town_or_city': request.POST['town_or_city'],
-            'street_address1': request.POST['street_address1'],
-            'street_address2': request.POST['street_address2'],
-            'state': request.POST['state'],
+            'postcode': request.POST.get('postcode', ''),
+            'town_or_city': request.POST.get('town_or_city', ''),
+            'street_address1': request.POST.get('street_address1', ''),
+            'street_address2': request.POST.get('street_address2', ''),
+            'state': request.POST.get('state', ''),
+            'delivery_method': request.POST.get('delivery_method', 'pickup'),
         }
+
         order_form = OrderForm(form_data)
+
         if order_form.is_valid():
-            order = order_form.save()
+            order = order_form.save(commit=False)
+            order.delivery_method = form_data['delivery_method']
+
+            if order.delivery_method == 'pickup':
+                order.delivery_cost = 0
+            else:
+                order.delivery_cost = Decimal(request.session.get('delivery_cost', '0.00'))
+
+            print("Delivery Method Chosen:", order.delivery_method)
+
+            order.save()
+
             for key, item_data in cart.items():
                 # Split item_id and sauce_id from the key if sauce_id exists
                 parts = key.split('_')
@@ -69,7 +85,17 @@ def checkout(request):
                         "Give us a call and we’ll help you track down that runaway wing!")
                     )
                     order.delete()
-                    return redirect(reverse('view_bag'))
+                    return redirect(reverse('view_cart'))
+                
+            order.update_total()
+
+            stripe.api_key = stripe_secret_key
+            stripe_total = round(order.grand_total * 100)
+
+            intent = stripe.PaymentIntent.create(
+                amount=stripe_total,
+                currency=settings.STRIPE_CURRENCY,
+            )
 
             request.session['save_info'] = 'save-info' in request.POST
             return redirect(reverse('checkout_success', args=[order.order_number]))
@@ -102,6 +128,7 @@ def checkout(request):
         'order_form': order_form,
         'stripe_public_key': stripe_public_key,
         'client_secret': intent.client_secret,
+        'order': order,
     }
 
     return render(request, template, context)

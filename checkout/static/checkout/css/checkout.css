@@ -3,6 +3,12 @@
     right: .5rem;
 }
 
+.disabled-field {
+    background-color: #e9ecef;  /* light gray */
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
 #payment-form .form-control,
 #card-element {
     color: #000;
