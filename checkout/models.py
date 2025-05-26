@@ -76,7 +76,7 @@ class OrderLineItem(models.Model):
                               on_delete=models.CASCADE, related_name='lineitems')
     menu_item = models.ForeignKey(MenuItem, null=False, blank=False, on_delete=models.CASCADE)
     quantity = models.IntegerField(null=False, blank=False, default=1)
-    sauces = models.ManyToManyField(Sauce, blank=True)
+    sauce = models.ForeignKey(Sauce, null=True, blank=True, on_delete=models.SET_NULL)
     addons = models.ManyToManyField(AddOn, blank=True)
     lineitem_total = models.DecimalField(max_digits=6, decimal_places=2,
                                          null=False, blank=False, editable=False)
@@ -84,7 +84,9 @@ class OrderLineItem(models.Model):
     def save(self, *args, **kwargs):
         """ Calculate the lineitem total including add-ons """
         base_price = self.menu_item.price * self.quantity
-        addons_total = sum(addon.price for addon in self.addons.all()) * self.quantity
+        addons_total = 0
+        if self.pk:
+            addons_total = sum(addon.price for addon in self.addons.all()) * self.quantity
         self.lineitem_total = base_price + addons_total
         super().save(*args, **kwargs)
 
