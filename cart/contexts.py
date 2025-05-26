@@ -11,10 +11,15 @@ def cart_contents(request):
     cart = request.session.get('cart', {})
 
     for key, item_data in cart.items():
-        # Split item_id and sauce_id from the key
-        item_id, sauce_id = key.split('_')
+        # Split item_id and sauce_id from the key if a sauce_id exists
+        parts = key.split('_')
+        if len(parts) == 2:
+            item_id, sauce_id = parts
+            sauce_id = int(sauce_id) if sauce_id != 'None' else None
+        else:
+            item_id = parts[0]
+            sauce_id = None
         item_id = int(item_id)
-        sauce_id = int(sauce_id) if sauce_id != 'None' else None
 
         # Retrieve the menu item and sauce objects
         menu_item = get_object_or_404(MenuItem, pk=item_id)

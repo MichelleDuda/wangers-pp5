@@ -29,10 +29,15 @@ def checkout(request):
         if order_form.is_valid():
             order = order_form.save()
             for key, item_data in cart.items():
-                # Split item_id and sauce_id from the key
-                item_id, sauce_id = key.split('_')
+                # Split item_id and sauce_id from the key if sauce_id exists
+                parts = key.split('_')
+                if len(parts) == 2:
+                    item_id, sauce_id = parts
+                    sauce_id = int(sauce_id) if sauce_id != 'None' else None
+                else:
+                    item_id = parts[0]
+                    sauce_id = None
                 item_id = int(item_id)
-                sauce_id = int(sauce_id) if sauce_id != 'None' else None
 
                 try:
                     menu_item = MenuItem.objects.get(pk=item_id)
@@ -42,8 +47,8 @@ def checkout(request):
                             sauce = Sauce.objects.get(pk=sauce_id)
                         except Sauce.DoesNotExist:
                             messages.error(request, (
-                                "Uh-oh! One of the sauces in your cart is missing from our system. "
-                                "Please contact support for help!"
+                                "Uh-oh! One of your sauces has vanished into thin air! "
+                                "We can’t find it in our system—please contact us so we can fix this dip-tastrophe!"
                             ))
                             order.delete()
                             return redirect(reverse('view_bag'))
@@ -69,8 +74,8 @@ def checkout(request):
             request.session['save_info'] = 'save-info' in request.POST
             return redirect(reverse('checkout_success', args=[order.order_number]))
         else:
-            messages.error(request, 'There was an error with your form. \
-                Please double check your information.')
+            messages.error(request, 'Uh-oh! Something seems a bit off in your order. \
+                Please double check your information so we can get those wings flying your way!')
             
     else:  
         cart = request.session.get ('cart', {})
