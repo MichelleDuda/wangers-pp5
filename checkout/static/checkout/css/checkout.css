@@ -63,3 +63,24 @@
     height: 100%;
     color: black;
 }
+
+/* Checkout Success Styling */
+.checkout-success-block {
+  background-color: white;
+    border: 1px solid black;
+    border-radius: 30px;
+    width: 70%
+}
+
+.form-header {
+  background-color: black;
+  color: white;
+  margin-top: 30px;
+}
+
+.page-bg {
+    background: url('/media/hero.jpg') no-repeat center center / cover;
+    width: 100%;
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
