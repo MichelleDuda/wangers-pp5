@@ -265,6 +265,16 @@ footer p {
     padding-bottom: 20px;
 }
 
+.fixed-page-bg {
+    background: url('/media/hero.jpg') no-repeat center center / cover;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: -1;
+}
+
 .registration_block {
     width: 70%;
     background: linear-gradient(to bottom, #2f4f4f, #1b2e2e);
