@@ -41,3 +41,25 @@
 .stripe-style-input::placeholder {
     color: #aab7c4;
 }
+
+#loading-overlay {
+	  display: none;
+	  position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(112, 128, 144, 0.781);
+    z-index: 99999;
+    align-items: center;
+    justify-content: center;
+}
+
+.loading-spinner {
+	  display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+    height: 100%;
+    color: black;
+}
