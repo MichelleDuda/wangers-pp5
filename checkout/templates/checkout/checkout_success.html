@@ -11,17 +11,20 @@
 {% block content %}
 
 <div class="page-bg">
-<div class="checkout-success-block center mx-auto">
+<div class="form-block center mx-auto">
     <div class="row form-header">
         <div class="col">
-            <hr>
-            <h2 class="logo-font mb-4 text-center"><i class="fa-solid fa-drumstick-bite"></i> Your Wings Are in the Works! <i class="fa-solid fa-drumstick-bite"></i></h2>
-            <hr>
-         <p class="text-center">Your order information is below. A confirmation email will be sent to <strong>{{ order.email }}</strong>.</p>   
+            <h2 class="logo-font mb-4 mt-4 text-center"><i class="fa-solid fa-drumstick-bite"></i> Your Wings Are in the Works! <i class="fa-solid fa-drumstick-bite"></i></h2>
         </div>
     </div>
 
- <div class="row">
+<div class="row">
+    <div class="col">
+        <p class="text-center">Your order information is below. A confirmation email will be sent to <strong>{{ order.email }}</strong>.</p>
+    </div>
+</div>
+
+<div class="row">
     <div class="col-12 col-lg-7 mx-auto">
         <div class="order-confirmation-wrapper p-2 border">
             <div class="row">

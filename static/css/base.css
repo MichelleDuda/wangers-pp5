@@ -245,6 +245,26 @@ footer p {
 
 /* ------------------------------------------------------------------------ Account Templates Styles */
 
+.form-block {
+  background-color: white;
+    border: 1px solid black;
+    border-radius: 30px;
+    width: 70%
+}
+
+.form-header {
+  background-color: black;
+  color: white;
+  margin-top: 30px;
+}
+
+.page-bg {
+    background: url('/media/hero.jpg') no-repeat center center / cover;
+    width: 100%;
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
 .registration_block {
     width: 70%;
     background: linear-gradient(to bottom, #2f4f4f, #1b2e2e);

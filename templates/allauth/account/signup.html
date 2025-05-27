@@ -5,24 +5,29 @@
 {% block head_title %}{% trans "Signup" %}{% endblock %}
 
 {% block content %}
-<div class="registration_block center mx-auto my-4">
-  <h1>{% trans "SPICE UP YOUR LIFE" %}</h1>
-  <h2>{% trans "SIGN UP HERE " %}<i class="fa-solid fa-user-plus"></i></h2>
-  <br>
+<div class="page-bg">
+  <div class="form-block center mx-auto">
+    <div class="row form-header">
+      <div class="col">
+        <h1 class="text-center mb-4 mt-4">{% trans "SPICE UP YOUR LIFE" %}</h1>
+      </div>
+    </div>
 
-  <form class="signup" id="signup_form" method="post" action="{% url 'account_signup' %}">
-    {% csrf_token %}
-    {{ form.as_p }}
-    {% if redirect_field_value %}
-    <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
-    {% endif %}
-    <button class="registration_button" type="submit">{% trans "Sign Up" %} &raquo;</button>
-  </form>
+    <div class="mt-4">
+      <h2 class="text-center">{% trans "SIGN UP HERE " %}<i class="fa-solid fa-user-plus"></i></h2>
+      <p class="text-center">{% blocktrans %}Already have an account? Then please <a href="{{ login_url }}">sign in</a>.{% endblocktrans %}</p>
+    </div>
 
-  <div class="mt-4">
-    <p>{% blocktrans %}Already have an account? Then please <a href="{{ login_url }}">sign in</a>.{% endblocktrans %}</p>
+    <form class="signup mx-auto text-center mt-4" id="signup_form" method="post" action="{% url 'account_signup' %}">
+      {% csrf_token %}
+      {{ form.as_p }}
+      {% if redirect_field_value %}
+      <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+      {% endif %}
+      <button class="registration_button mb-4" type="submit">{% trans "Sign Up" %} &raquo;</button>
+    </form>
+
   </div>
-
 </div>
 
 
