@@ -210,12 +210,21 @@
 
     <div class="row">
         <div class="col-12 col-lg-7 text-right">
+            {% if from_profile %}
+            <a href="{% url 'profile' %}" class="btn btn-black rounded-0 my-2">
+                <span class="icon mr-2">
+                    <i class="fas fa-user"></i>
+                </span>
+                <span class="text-uppercase">Back to My Profile</span>
+            </a>
+            {% else %}
             <a href="{% url 'menu' %}" class="btn btn-black rounded-0 my-2">
                 <span class="icon mr-2">
-                    <i class="fas fa-gifts"></i>
+                    <i class="fas fa-drumstick-bite"></i>
                 </span>
                 <span class="text-uppercase">Back to Menu</span>
             </a>
+            {% endif %}
         </div>
     </div>
 
