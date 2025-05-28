@@ -1,14 +1,34 @@
 from decimal import Decimal
-from django.shortcuts import render, redirect, reverse, get_object_or_404
+from django.shortcuts import render, redirect, reverse, HttpResponse, get_object_or_404
 from django.contrib import messages
+from django.views.decorators.http import require_POST
 from .forms import OrderForm
 from django.conf import settings
 from cart.contexts import cart_contents
 from menu.models import MenuItem, Sauce
 from .models import Order, OrderLineItem
 import stripe
+import json
 
 # Create your views here.
+@require_POST
+def cache_checkout_data(request):
+    try:
+        pid = request.POST.get('client_secret').split('_secret')[0]
+        stripe.api_key = settings.STRIPE_SECRET_KEY
+        stripe.PaymentIntent.modify(pid, metadata={
+            'cart': json.dumps(request.session.get('cart', {})),
+            'save_info': request.POST.get('save_info'),
+            'username': request.user,
+            'delivery_method': request.POST.get('delivery_method', 'pickup'),
+        })
+        return HttpResponse(status=200)
+    except Exception as e:
+        messages.error(request, 'Sorry, your payment cannot be \
+            processed right now. Please try again later.')
+        return HttpResponse(content=e, status=400)
+
+
 def checkout(request):
     stripe_public_key = settings.STRIPE_PUBLIC_KEY
     stripe_secret_key = settings.STRIPE_SECRET_KEY
@@ -33,6 +53,9 @@ def checkout(request):
 
         if order_form.is_valid():
             order = order_form.save(commit=False)
+            pid = request.POST.get('client_secret').split('_secret')[0]
+            order.strip_pid = pid
+            order.original_bag = json.dumps(cart)
             order.delivery_method = form_data['delivery_method']
 
             if order.delivery_method == 'pickup':
