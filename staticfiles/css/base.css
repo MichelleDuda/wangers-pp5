@@ -22,6 +22,10 @@ main {
     overflow: hidden;
 }
 
+.alert {
+    margin-bottom: 0;
+}
+
 /* ------------------------------------------------------------------------------------ Header Styles */
 header {
     background-color: #F59E13;
