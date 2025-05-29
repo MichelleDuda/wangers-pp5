@@ -1,0 +1,22 @@
+Hey {{ order.full_name }}!
+
+Thanks for flappin’ by Wangers — your order is hot off the press and flying through our system.
+
+Here’s the saucy rundown:
+
+🐔 Order Number: {{ order.order_number }}
+📅 Date: {{ order.date }}
+💸 Order Total: ${{ order.order_total }}
+🚚 Delivery Fee: ${{ order.delivery_cost }}
+🔥 Grand Total: ${{ order.grand_total }}
+
+We’ll be wingin’ it over to:
+
+📍 {{ order.street_address1 }} {{ order.street_address2 }}, {{ order.town_or_city }}, {{ order.state }} {{ order.postal_code }}
+📞 And if we need to squawk, we’ve got your number: {{ order.phone_number }}
+
+Got a burning question or sauce emergency? Hit us up at {{ contact_email }} — we’ve got your back (and your wings).
+
+Thanks for choosing Wangers. Stay crispy. Stay bold. Stay hungry.
+
+– The Wangers Crew 🍗

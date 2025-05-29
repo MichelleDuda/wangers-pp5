@@ -1,0 +1,1 @@
+🍗 Order Confirmed! Your Wings Are in the Works, {{ order.full_name }}! Order #{{ order.order_number }}
