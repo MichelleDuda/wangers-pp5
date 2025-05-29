@@ -10,34 +10,14 @@
 <div class="form-block mx-auto my-4">
     <div class="row form-header">
         <div class="col text-center mt-3">
-            <h2 class="logo-font">Wingin It: The Official Menu!</h2>
+            <h2 class="logo-font"><i class="fa-solid fa-drumstick-bite"></i> Wingin It: The Official Menu! <i class="fa-solid fa-drumstick-bite"></i></h2>
             <hr class="w-50 mx-auto mb-1">
         </div>
     </div>
 
     <!-- Search Bar & Filter -->
     <div class="row justify-content-center align-items-center my-4">
-        <!-- Filter Dropdown (Left Column) -->
-        <div class="col-md-3 text-md-left mb-2 mb-md-0">
-            <div class="dropdown">
-                <button class="btn btn-outline-dark dropdown-toggle w-100" type="button" id="filterDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Filter
-                </button>
-                <div class="dropdown-menu w-100" aria-labelledby="filterDropdown">
-                    <a class="dropdown-item" href="{% url 'menu' %}">All Menu Items</a>
-                    <a class="dropdown-item" href="{% url 'menu' %}?dietary_restriction=gluten_free">Gluten-Free</a>
-                    <a class="dropdown-item" href="{% url 'menu' %}?dietary_restriction=vegan">Vegan</a>
-                    <a class="dropdown-item" href="{% url 'menu' %}?dietary_restriction=vegetarian">Vegetarian</a>
-                </div>
-            </div>
-        </div>
-
-        <!-- Middle Placeholder (Center Column) -->
-        <div class="col-md-3 text-center d-none d-md-block">
-            <!-- Placeholder for spacing or future use -->
-        </div>
-
-        <!-- Search Bar (Right Column) -->
+        <!-- Search Bar (Left Column) -->
         <div class="col-md-3">
             <form method="GET" action="{% url 'menu' %}">
                 <div class="input-group">
@@ -53,12 +33,32 @@
                 </div>
             </form>
         </div>
+
+        <!-- Middle Placeholder (Center Column) -->
+        <div class="col-md-3 text-center d-none d-md-block">
+            <!-- Placeholder for spacing or future use -->
+        </div>
+
+        <!-- Dietary Restriction Filter (Right Column) -->
+         <div class="col-md-3 text-md-left mb-2 mb-md-0">
+            <div class="dropdown">
+                <button class="btn btn-outline-dark dropdown-toggle w-100" type="button" id="filterDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Filter
+                </button>
+                <div class="dropdown-menu w-100" aria-labelledby="filterDropdown">
+                    <a class="dropdown-item" href="{% url 'menu' %}">All Menu Items</a>
+                    <a class="dropdown-item" href="{% url 'menu' %}?dietary_restriction=gluten_free">Gluten-Free</a>
+                    <a class="dropdown-item" href="{% url 'menu' %}?dietary_restriction=vegan">Vegan</a>
+                    <a class="dropdown-item" href="{% url 'menu' %}?dietary_restriction=vegetarian">Vegetarian</a>
+                </div>
+            </div>
+        </div>
     </div>
 
 
     {% for category, menu_items in items_by_category %}
     <section class="category-section">
-        <div class="row mt-5">
+        <div class="row mt-1">
             <div class="col text-center">
                 <h3 class="text-uppercase">
                     {{ category.friendly_name|default:category.name }}
