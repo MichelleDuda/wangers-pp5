@@ -103,6 +103,14 @@ class StripeWH_Handler:
                         "street_address2__iexact": shipping_details.address.line2,
                         "state__iexact": shipping_details.address.state,
                     })
+                    
+                print("Looking for existing order with:")
+                print("  full_name:", shipping_details.name)
+                print("  email:", billing_details.email)
+                print("  phone:", shipping_details.phone)
+                print("  grand_total:", grand_total)
+                print("  original_cart:", json.dumps(cart))
+                print("  stripe_pid:", pid)
 
                 order = Order.objects.get(**order_filter)
                 order_exists = True

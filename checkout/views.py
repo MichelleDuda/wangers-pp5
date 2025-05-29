@@ -56,8 +56,8 @@ def checkout(request):
         if order_form.is_valid():
             order = order_form.save(commit=False)
             pid = request.POST.get('client_secret').split('_secret')[0]
-            order.strip_pid = pid
-            order.original_bag = json.dumps(cart)
+            order.stripe_pid = pid
+            order.original_cart = json.dumps(cart)
             order.delivery_method = form_data['delivery_method']
 
             if order.delivery_method == 'pickup':
@@ -92,7 +92,7 @@ def checkout(request):
                                 "We can’t find it in our system—please contact us so we can fix this dip-tastrophe!"
                             ))
                             order.delete()
-                            return redirect(reverse('view_bag'))
+                            return redirect(reverse('view_cart'))
                     quantity = item_data.get('quantity', 1)
 
                     order_line_item = OrderLineItem(
