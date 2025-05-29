@@ -36,6 +36,26 @@ card.addEventListener('change', function (event) {
     }
 });
 
+// Update clientSecret when delivery method changes
+$('input[name="delivery_method"]').change(function() {
+    var selectedDelivery = $('input[name="delivery_method"]:checked').val();
+
+    $.ajax({
+        type: "POST",
+        url: "/checkout/create-payment-intent/",
+        data: {
+            'delivery_method': selectedDelivery,
+            'csrfmiddlewaretoken': $('input[name="csrfmiddlewaretoken"]').val()
+        },
+        success: function(response) {
+            clientSecret = response.client_secret;
+            console.log('Updated client secret for delivery method:', selectedDelivery);
+        },
+        error: function() {
+            alert("Failed to update payment intent for delivery method. Please reload.");
+        }
+    });
+});
 
 // Handle form submit
 var form = document.getElementById('payment-form');

@@ -1,7 +1,7 @@
 var stripePublicKey = $('#id_stripe_public_key').text().slice(1, -1);
-var clientSecret = $('#id_client_secret').text().slice(1, -1);
 var stripe = Stripe(stripePublicKey);
 var elements = stripe.elements();
+
 var style = {
     base: {
         color: '#000',
@@ -17,10 +17,11 @@ var style = {
         iconColor: '#dc3545'
     }
 };
+
 var card = elements.create('card', {style: style});
 card.mount('#card-element');
 
-//Handle realtime validation errors on the card element
+// Handle realtime validation errors on the card element
 card.addEventListener('change', function (event) {
     var errorDiv = document.getElementById('card-errors');
     if (event.error) {
@@ -32,28 +33,34 @@ card.addEventListener('change', function (event) {
         `;
         $(errorDiv).html(html);
     } else {
-        errorDiv.textContent = '';        
+        errorDiv.textContent = '';
     }
 });
-
 
 // Handle form submit
 var form = document.getElementById('payment-form');
 
 form.addEventListener('submit', function(ev) {
     ev.preventDefault();
-    card.update({ 'disabled': true});
+
+    // Disable form and show loading state
+    card.update({ 'disabled': true });
     $('#submit-button').attr('disabled', true);
     $('#payment-form').fadeOut(100);
     $('#loading-overlay').css('display', 'flex').hide().fadeIn(100);
 
-    var saveInfo = Boolean($('#id-save-info').attr('checked'));
+    var saveInfo = Boolean($('#id-save-info').is(':checked'));
     var csrfToken = $('input[name="csrfmiddlewaretoken"]').val();
+
+    // Always get fresh client secret from hidden input
+    var clientSecret = $('#id_client_secret').val();
+
     var postData = {
         'csrfmiddlewaretoken': csrfToken,
         'client_secret': clientSecret,
         'save_info': saveInfo,
     };
+
     var url = '/checkout/cache_checkout_data/';
 
     $.post(url, postData).done(function () {
@@ -88,13 +95,13 @@ form.addEventListener('submit', function(ev) {
                 var errorDiv = document.getElementById('card-errors');
                 var html = `
                     <span class="icon" role="alert">
-                    <i class="fas fa-times"></i>
+                        <i class="fas fa-times"></i>
                     </span>
                     <span>${result.error.message}</span>`;
                 $(errorDiv).html(html);
                 $('#payment-form').fadeIn(100);
                 $('#loading-overlay').fadeOut(100);
-                card.update({ 'disabled': false});
+                card.update({ 'disabled': false });
                 $('#submit-button').attr('disabled', false);
             } else {
                 if (result.paymentIntent.status === 'succeeded') {
@@ -103,7 +110,7 @@ form.addEventListener('submit', function(ev) {
             }
         });
     }).fail(function () {
-        // just reload the page, the error will be in django messages
+        // Reload page on failure to cache checkout data
         location.reload();
-    })
+    });
 });
