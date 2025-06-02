@@ -1,5 +1,6 @@
 var stripePublicKey = $('#id_stripe_public_key').text().slice(1, -1);
-var clientSecret = $('#id_client_secret').text().slice(1, -1);
+var clientSecret = $('#id_client_secret').val();
+$('#id_client_secret').val(clientSecret); 
 var stripe = Stripe(stripePublicKey);
 var elements = stripe.elements();
 var style = {
@@ -19,6 +20,7 @@ var style = {
 };
 var card = elements.create('card', {style: style});
 card.mount('#card-element');
+console.log("Client secret in JS:", $('#id_client_secret').val());
 
 //Handle realtime validation errors on the card element
 card.addEventListener('change', function (event) {
@@ -49,6 +51,7 @@ $('input[name="delivery_method"]').change(function() {
         },
         success: function(response) {
             clientSecret = response.client_secret;
+            $('#id_client_secret').val(clientSecret);
             console.log('Updated client secret for delivery method:', selectedDelivery);
         },
         error: function() {
@@ -73,6 +76,7 @@ form.addEventListener('submit', function(ev) {
         'csrfmiddlewaretoken': csrfToken,
         'client_secret': clientSecret,
         'save_info': saveInfo,
+        'delivery_method': $('input[name="delivery_method"]:checked').val()
     };
     var url = '/checkout/cache_checkout_data/';
 

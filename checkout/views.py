@@ -16,6 +16,8 @@ import json
 
 @require_POST
 def cache_checkout_data(request):
+    print("Received POST data:", request.POST)
+
     try:
         client_secret = request.POST.get('client_secret', '')
         if not client_secret:
@@ -50,10 +52,9 @@ def create_payment_intent(request):
         delivery = float(current_cart['delivery'])
         grand_total = float(current_cart['grand_total'])
 
-        stripe_total = round(current_cart['grand_total'] * 100)
+        stripe_total = round(grand_total * 100)
 
         stripe.api_key = settings.STRIPE_SECRET_KEY
-
         payment_intent_id = request.session.get('payment_intent_id')
 
         if payment_intent_id:
@@ -64,26 +65,30 @@ def create_payment_intent(request):
                     amount=stripe_total,
                 )
             except stripe.error.InvalidRequestError:
-                # If update fails create new Payment Intent
+                # If update fails, cancel the old intent and create a new one
+                try:
+                    stripe.PaymentIntent.cancel(payment_intent_id)
+                except Exception as e:
+                    pass
+
                 intent = stripe.PaymentIntent.create(
                     amount=stripe_total,
                     currency=settings.STRIPE_CURRENCY,
                 )
                 request.session['payment_intent_id'] = intent.id
         else:
-            # Create a New payment intent if none exists
+            # Create a new PaymentIntent if none exists
             intent = stripe.PaymentIntent.create(
                 amount=stripe_total,
                 currency=settings.STRIPE_CURRENCY,
             )
             request.session['payment_intent_id'] = intent.id
 
-
         return JsonResponse({
             'client_secret': intent.client_secret,
-            'total': float(total),
-            'delivery': float(delivery),
-            'grand_total': float(grand_total),
+            'total': total,
+            'delivery': delivery,
+            'grand_total': grand_total,
         })
 
     return JsonResponse({'error': 'Invalid request'}, status=400)
@@ -188,6 +193,13 @@ def checkout(request):
             return redirect(reverse('menu'))
 
         current_cart = cart_contents(request)
+        stripe_total = round(float(current_cart['grand_total']) * 100)
+
+        stripe.api_key = settings.STRIPE_SECRET_KEY
+        intent = stripe.PaymentIntent.create(
+            amount=stripe_total,
+            currency=settings.STRIPE_CURRENCY,
+        )
 
         if request.user.is_authenticated:
             try:
@@ -213,6 +225,7 @@ def checkout(request):
         return render(request, 'checkout/checkout.html', {
             'order_form': order_form,
             'stripe_public_key': stripe_public_key,
+            'client_secret': intent.client_secret,
             'order': order,
         })
 
@@ -223,29 +236,35 @@ def checkout_success(request, order_number):
     save_info = request.session.get('save_info')
     order = get_object_or_404(Order, order_number=order_number)
 
-    profile = UserProfile.objects.get(user=request.user)
-    order.user_profile = profile
-    order.save()
+    if request.user.is_authenticated:
+        try:
+            profile = UserProfile.objects.get(user=request.user)
+            order.user_profile = profile
+            order.save()
 
-    if save_info:
-        profile_data = {
-            'default_phone_number': order.phone_number,
-            'default_postcode': order.postcode,
-            'default_town_or_city': order.town_or_city,
-            'default_street_address1': order.street_address1,
-            'default_street_address2': order.street_address2,
-            'default_state': order.state,
-        }
-        user_profile_form = UserProfileForm(profile_data, instance=profile)
-        if user_profile_form.is_valid():
-            user_profile_form.save()
+            if save_info:
+                profile_data = {
+                    'default_phone_number': order.phone_number,
+                    'default_postcode': order.postcode,
+                    'default_town_or_city': order.town_or_city,
+                    'default_street_address1': order.street_address1,
+                    'default_street_address2': order.street_address2,
+                    'default_state': order.state,
+                }
+                user_profile_form = UserProfileForm(profile_data, instance=profile)
+                if user_profile_form.is_valid():
+                    user_profile_form.save()
+        except UserProfile.DoesNotExist:
+            pass
 
-    messages.success(request, f'Order successfully processed! \
-        Your order number is {order_number}. A confirmation \
-        email will be sent to {order.email}.')
-    
+    messages.success(request, f'Order successfully processed! '
+        f'Your order number is {order_number}. A confirmation '
+        f'email will be sent to {order.email}.')  
     if 'cart' in request.session:
         del request.session['cart']
+    
+    if 'payment_intent_id' in request.session:
+        del request.session['payment_intent_id']
 
     template = 'checkout/checkout_success.html'
     context = {
