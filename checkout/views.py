@@ -59,6 +59,16 @@ def create_payment_intent(request):
 
         if payment_intent_id:
             try:
+                existing_intent = stripe.PaymentIntent.retrieve(payment_intent_id)
+                if existing_intent.status == 'succeeded':
+                    # Clear the old one — it's already paid
+                    del request.session['payment_intent_id']
+                    payment_intent_id = None
+            except stripe.error.InvalidRequestError:
+                payment_intent_id = None
+
+        if payment_intent_id:
+            try:
                 # Try to update the existing PaymentIntent amount
                 intent = stripe.PaymentIntent.modify(
                     payment_intent_id,
@@ -169,17 +179,7 @@ def checkout(request):
                     order.delete()
                     return redirect(reverse('view_cart'))
 
-            # Update total after saving all line
-            order.update_total()
-
-            # FINAL STRIPE TOTAL from updated order
-            stripe.api_key = stripe_secret_key
-            stripe_total = round(order.grand_total * 100)
-
-            intent = stripe.PaymentIntent.create(
-                amount=stripe_total,
-                currency=settings.STRIPE_CURRENCY,
-            )
+            order.stripe_pid = pid
 
             request.session['save_info'] = 'save-info' in request.POST
             return redirect(reverse('checkout_success', args=[order.order_number]))
@@ -196,10 +196,25 @@ def checkout(request):
         stripe_total = round(float(current_cart['grand_total']) * 100)
 
         stripe.api_key = settings.STRIPE_SECRET_KEY
-        intent = stripe.PaymentIntent.create(
-            amount=stripe_total,
-            currency=settings.STRIPE_CURRENCY,
-        )
+        stripe.api_key = settings.STRIPE_SECRET_KEY
+        payment_intent_id = request.session.get('payment_intent_id')
+
+        if not payment_intent_id:
+            intent = stripe.PaymentIntent.create(
+                amount=stripe_total,
+                currency=settings.STRIPE_CURRENCY,
+            )
+            request.session['payment_intent_id'] = intent.id
+        else:
+            try:
+                intent = stripe.PaymentIntent.retrieve(payment_intent_id)
+            except stripe.error.InvalidRequestError:
+                # If somehow the ID is invalid or expired, create a new one
+                intent = stripe.PaymentIntent.create(
+                    amount=stripe_total,
+                    currency=settings.STRIPE_CURRENCY,
+                )
+                request.session['payment_intent_id'] = intent.id
 
         if request.user.is_authenticated:
             try:
