@@ -85,7 +85,7 @@ class StripeWH_Handler:
         # Check if order with this Stripe payment intent ID already exists
         order = None
         attempt = 1
-        while attempt <= 5:
+        while attempt <= 10:
             try:
                 order = Order.objects.get(stripe_pid=pid)
                 break
