@@ -26,6 +26,10 @@ main {
     margin-bottom: 0;
 }
 
+.hidden-heading {
+    display: none;
+}
+
 /* ------------------------------------------------------------------------------------ Header Styles */
 header {
     background-color: #F59E13;
@@ -164,6 +168,36 @@ footer p {
 #hero-cover-text h2 {
     font-size: 3em;
 }
+
+#newsletter-section {
+    background-color: #F59E13;
+}
+
+.subscribe_button {
+    background: linear-gradient(to right, #000000, #555555);
+    color: white;
+    padding: 12px 30px;
+    font-size: 1.2rem;
+    font-weight: 600;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease;
+}
+
+.subscribe_button:hover {
+    background: linear-gradient(to right, #333333, #777777);
+    color: whitesmoke;
+    transform: scale(1.05);
+    box-shadow: 0 12px 20px rgba(0, 0, 0, 0.3);
+}
+
+.subscribe_button:active {
+    transform: scale(0.97);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
 
 /* -------------------------------------------------------------------------------- Menu Styling */
 
@@ -381,6 +415,15 @@ footer p {
     
 }
 @media (min-width: 768px) {
+    #about-us-section {
+    display: flex;
+    }
+
+    #about-us-section div {
+        padding: 15px;
+        flex-basis: 33.333%;
+    }
+
     #footer-container {
         display: flex;
         flex-direction: row;

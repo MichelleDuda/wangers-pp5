@@ -2,13 +2,13 @@ from django.shortcuts import render, redirect
 from django.core.mail import send_mail
 from django.conf import settings
 from django.contrib import messages
-from .forms import ContactForm
+from .forms import ContactForm, NewsletterSignupForm
 
 
 def index(request):
     ''' A view to return the home page'''
-    
-    return render(request, 'home/index.html')
+    form = NewsletterSignupForm()
+    return render(request, 'home/index.html', {'form': form})
 
 
 def contact_view(request):
@@ -31,3 +31,13 @@ def contact_view(request):
     else:
         form = ContactForm()
     return render(request, 'home/contact.html', {'form': form})
+
+def newsletter_signup(request):
+    if request.method == 'POST':
+        form = NewsletterSignupForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "You’ve been signed up for the newsletter!")
+        else:
+            messages.error(request, "Please enter a valid email.")
+    return redirect(request.META.get('HTTP_REFERER', '/'))

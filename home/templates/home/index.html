@@ -17,5 +17,42 @@
     </div>
 </section>
 
+<section id="about-us-section" class="text-center px-2 py-2">
+     <h2 class="hidden-heading">About Us</h2>
+        <div>
+            <h3>Farm Fresh <i class="fa-solid fa-seedling"></i></h3>
+            <hr>
+            <p>We partner with local farms to bring you wings made with fresh, responsibly sourced ingredients.</p>
+        </div>
+        <div>
+            <h3>Giving Back <i class="fa-solid fa-hand-holding-heart"></i></h3>
+            <hr>
+            <p>A portion of every order supports local agriculture and food initiatives in our community.</p>
+        </div>
+        <div>
+            <h3>Quality You Can Taste <i class="fa-solid fa-egg"></i></h3>
+            <hr>
+            <p>No hormones, no shortcuts—just real chicken, real flavor, and real care in every bite. All our chickens are 100% organic free-range.</p>
+        </div>
+</section>
+
+<section id="newsletter-section" class="my-2 py-4">
+    <h2 class="text-center">SIGNUP FOR OUR NEWSLETTER</h2>
+    <form action="{% url 'newsletter_signup' %}" method="post">
+        {% csrf_token %}
+        
+        <div class="row justify-content-center my-2">
+            <div class="col-12 col-sm-8 col-md-6">
+                {{ form.email }}
+            </div>
+        </div>
+
+        <div class="row justify-content-center mb-2">
+            <div class="col-auto">
+                <button type="submit" class="btn subscribe_button">Subscribe</button>
+            </div>
+        </div>
+    </form>
+</section>
 
 {% endblock %}
