@@ -1,6 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.db.models import Q
 from django.views.generic import ListView
 from .models import Review, Like
 from menu.models import MenuItem
@@ -15,7 +16,20 @@ class ReviewListView(ListView):
     paginate_by = 10
 
     def get_queryset(self):
-        return Review.objects.filter(approved=True).order_by('-created_at')
+        queryset = Review.objects.filter(approved=True).order_by('-created_at')
+        menu_item_id = self.request.GET.get('menu_item')
+        search_query = self.request.GET.get('search')
+
+        if menu_item_id:
+            queryset = queryset.filter(menu_item__id=menu_item_id)
+
+        if search_query:
+            queryset = queryset.filter(
+                Q(title__icontains=search_query) |
+                Q(body__icontains=search_query)
+            )
+
+        return queryset
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -26,6 +40,10 @@ class ReviewListView(ListView):
         for review in reviews:
             review.total_likes = review.total_likes()
             review.has_liked = review.has_liked(user)
+
+        context['menu_items'] = MenuItem.objects.all()
+        context['request'] = self.request
+
         return context
 
 

@@ -4,16 +4,49 @@
 <div class="page-bg">
   <div class="form-block center mx-auto">
     <div class="row form-header">
-      <div class="col">
-        <h1 class="text-center mb-4 mt-4">Customer Reviews</h1>
+      <div class="col text-center mt-3">
+        <h2 class="logo-font"><i class="fa-solid fa-pen-to-square"></i> Customer Reviews <i class="fa-solid fa-pen-to-square"></i></h2>
       </div>
     </div>
 
-    <a href="{% url 'add_review' %}" class="btn btn-primary mb-3">Leave a Review</a>
+    <div class="row my-4 align-items-center mx-2">
+      <!-- Left side -->
+      <div class="col-12 col-md-6">
+        <!-- Empty on spacing -->
+      </div>
+
+      <!-- Right side: filter + search form -->
+      <div class="col-12 col-md-6 d-flex justify-content-md-end justify-content-center">
+        <form method="get" class="d-flex gap-2 w-100 flex-column flex-md-row">
+          <!-- Menu Item Filter -->
+          <select name="menu_item" class="form-select w-100 w-md-auto" aria-label="Filter by menu item">
+            <option value="">All Menu Items</option>
+            {% for item in menu_items %}
+              <option value="{{ item.id }}" {% if item.id|stringformat:"s" == request.GET.menu_item %}selected{% endif %}>
+                {{ item.name }}
+              </option>
+            {% endfor %}
+          </select>
+
+          <!-- Search Field -->
+          <input
+            type="text"
+            name="search"
+            value="{{ request.GET.search|default_if_none:'' }}"
+            class="form-control w-100 w-md-auto"
+            placeholder="Search reviews..."
+            aria-label="Search reviews"
+          />
+
+          <!-- Filter Button -->
+          <button type="submit" class="btn btn-black rounded-0 w-100 w-md-auto">Filter</button>
+        </form>
+      </div>
+    </div>
 
     {% if reviews %}
       {% for review in reviews %}
-        <div class="review mb-4 p-3 rounded border">
+        <div class="review mb-4 p-3 rounded border mx-2">
           <h2>{{ review.title }}</h2>
           
           <!-- Rating Section -->
@@ -67,6 +100,12 @@
     {% else %}
       <p class="text-center">No reviews yet.</p>
     {% endif %}
+
+    <div class="row mt-4 align-items-center mx-auto">
+      <div class="col-12">
+        <a href="{% url 'add_review' %}" class="btn registration_button mb-3">Leave a Review</a>
+      </div>
+    </div>
   </div>
 </div>
 {% endblock %}

@@ -7,12 +7,12 @@
 <div class="page-bg">
   <div class="form-block center mx-auto px-2">
     <div class="row form-header">
-      <div class="col">
-        <h1 class="text-center mb-4 mt-4"><i class="fa-solid fa-pencil"></i>{% trans " WRITE A REVIEW " %}<i class="fa-solid fa-pencil"></i></h1>
+      <div class="col text-center mt-3">
+        <h2 class="logo-font"><i class="fa-solid fa-pencil"></i> Write A Review <i class="fa-solid fa-pencil"></i></h2>
       </div>
     </div>
 
-    <h2 class="text-center my-4">
+    <h3 class="text-center my-4">
       {% if form.instance.pk %}
         {% trans "Edit Your Review" %}
       {% else %}
@@ -23,7 +23,7 @@
     <form method="post" action="" class="mx-auto text-center">
       {% csrf_token %}
       {{ form.as_p }}
-      <button type="submit">Submit Review</button>
+      <button type="submit" class="registration_button mb-2">Submit Review</button>
     </form>
   </div>
 </div>
