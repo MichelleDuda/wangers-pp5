@@ -1,4 +1,5 @@
 from decimal import Decimal
+from django.contrib import messages
 from django.shortcuts import render, redirect, get_object_or_404, reverse, HttpResponse
 from django.conf import settings
 from django.http import JsonResponse
@@ -26,12 +27,14 @@ def add_to_cart(request, item_id):
 
     if key in cart:
         cart[key]['quantity'] += quantity
+        messages.success(request, f'Updated {menu_item.name} quantity')
     else:
         cart[key] = {
             'menu_item_id': item_id,
             'quantity': quantity,
             'sauce_id': sauce_id,
         }
+        messages.success(request, f'Added {menu_item.name} to your cart')
 
     request.session['cart'] = cart
     print(request.session['cart'])
@@ -52,6 +55,7 @@ def adjust_cart(request, item_id):
     if key in cart:
         if quantity > 0:
             cart[key]['quantity'] = quantity
+            messages.success(request, f'Updated {menu_item.name} quantity')
         else:
             del cart[key]
             if not cart[key]:
@@ -75,6 +79,7 @@ def remove_from_cart(request, item_id):
 
         if key in cart:
             del cart[key]
+            messages.success(request, f'Removed {menu_item.name} from cart')
         else:
             return HttpResponse(status=404)
 
@@ -82,7 +87,7 @@ def remove_from_cart(request, item_id):
         return HttpResponse(status=200)
 
     except Exception as e:
-        print(f"Error: {e}")
+        messages.error(f"Error removing item: {e}")
         return HttpResponse(status=500)
     
 

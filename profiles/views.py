@@ -42,6 +42,7 @@ def order_history(request, order_number):
     context = {
         'order': order,
         'from_profile': True,
+        'hide_toast_cart': True,
     }
 
     return render(request, template, context)

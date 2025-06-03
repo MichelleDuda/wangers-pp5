@@ -1,0 +1,66 @@
+{% load cart_tools %}
+
+<div class="toast custom-toast rounded-0 border-top 0" data-autohide="false">
+    <div class="arrow-up arrow-success"></div>
+    <div class="w-100 toast-capper bg-success"></div>
+    <div class="toast-header bg-white text-dark">
+        <strong class="mr-auto">Success!</strong>
+        <button type="button" class="ml-2 mb-1 close text-dark" data-dismiss="toast" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="toast-body bg-white">
+        <div class="row">
+            <div class="col">
+                {{ message }}
+                <hr class="mt-1 mb-3">
+            </div>
+        </div>
+        {% if grand_total and not hide_toast_cart %}
+            <p class="logo-font bg-white text-black py-1">Your Cart</p>
+            <div class="bag-notification-wrapper">
+                {% for item in cart_items %}
+                <div class="row mb-2">
+                    <div class="col-2 mb-1">
+                        {% if item.menu_item.image %}
+                            <img class="w-100" src="{{ item.menu_item.image.url }}" alt="{{ item.menu_item.name }}">
+                        {% else %}
+                            <img class="w-100" src="{{ MEDIA_URL }}noimage.png" alt="{{ item.menu_item.name }}">
+                        {% endif %}
+                    </div>
+                    <div class="col-7">
+                        <p class="my-0"><strong>{{ item.menu_item.name }}</strong></p>
+                        {% if item.sauce %}
+                            <p class="my-0 small">Sauce: {{ item.sauce.friendly_name }}</p>
+                        {% endif %}
+                        <p class="my-0 small text-muted">Qty: {{ item.quantity }}</p>
+                    </div>
+                    <div class="col-3 text-right">
+                        <p class="my-0 small text-muted">${{ item.menu_item.price | calc_subtotal:item.quantity }}</p>
+                    </div>
+                </div>
+            {% endfor %}
+            </div>
+
+            <div class="row">
+                <div class="col">
+                    <h6><strong>Coop Total: ${{ total|floatformat:2 }}</strong></h6>
+                    <h6>Delivery: ${{ delivery|floatformat:2 }}</h6>
+                    <h4 class="mt-4"><strong>Grand Total: ${{ grand_total|floatformat:2 }}</strong></h4>
+                    {% if free_delivery_delta > 0 %}
+                        <p class="mb-1 text-danger">
+                            You could get free delivery by spending just <strong>${{ free_delivery_delta }}</strong> more!
+                        </p>
+                    {% endif %}
+                    <a href="{% url 'cart' %}" class="btn btn-black btn-block rounded-0">
+                        <span class="text-uppercase">Go To Cart</span>
+                        <span class="icon">
+                            <i class="fas fa-lock"></i>
+                        </span>
+                    </a>
+                </div>
+            </div>
+
+        {% endif %}
+    </div>
+</div>

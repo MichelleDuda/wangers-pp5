@@ -7,8 +7,15 @@ from .forms import ContactForm, NewsletterSignupForm
 
 def index(request):
     ''' A view to return the home page'''
+
+    hide_toast_cart = request.session.pop('hide_toast_cart', False)
     form = NewsletterSignupForm()
-    return render(request, 'home/index.html', {'form': form})
+    context = {
+        'hide_toast_cart': hide_toast_cart,
+        'form': form
+    }
+   
+    return render(request, 'home/index.html', context)
 
 
 def contact_view(request):
@@ -38,6 +45,8 @@ def newsletter_signup(request):
         if form.is_valid():
             form.save()
             messages.success(request, "You’ve been signed up for the newsletter!")
+            request.session['hide_toast_cart'] = True
         else:
             messages.error(request, "Please enter a valid email.")
+            request.session['hide_toast_cart'] = True
     return redirect(request.META.get('HTTP_REFERER', '/'))

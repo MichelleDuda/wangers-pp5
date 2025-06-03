@@ -43,6 +43,7 @@ class ReviewListView(ListView):
 
         context['menu_items'] = MenuItem.objects.all()
         context['request'] = self.request
+        context['hide_toast_cart'] = self.request.session.pop('hide_toast_cart', False)
 
         return context
 
@@ -63,6 +64,7 @@ def create_review(request, menu_item_id=None):
             review.approved = False  # Ensure new review is pending approval
             review.save()
             messages.success(request, "Your review has been submitted for approval.")
+            request.session['hide_toast_cart'] = True
             return redirect('review_list')
         else:
             messages.success(request, "There was an error processing your review. Please try again or contact us if you continue to have trouble!")
@@ -72,6 +74,7 @@ def create_review(request, menu_item_id=None):
     context = {
         'form': form,
         'menu_item': menu_item,
+        'hide_toast_cart': True,
     }
 
     return render(request, 'reviews/review_form.html', context)
@@ -90,13 +93,15 @@ def edit_review(request, review_id):
             edited_review.approved = False  # Need re-approval after edit
             edited_review.save()
             messages.success(request, "Your review has been updated and submitted for re-approval.")
+            request.session['hide_toast_cart'] = True
             return redirect('review_list')
     else:
         form = ReviewForm(instance=review)
 
     return render(request, 'reviews/review_form.html', {
         'form': form,
-        'menu_item': review.menu_item
+        'menu_item': review.menu_item,
+        'hide_toast_cart': True,
     })
 
 @login_required
