@@ -20,11 +20,51 @@
       {% endif %}
     </h2>
 
-    <form method="post" action="" class="mx-auto text-center">
-      {% csrf_token %}
-      {{ form.as_p }}
+    <form method="post" action="" class="mx-auto text-start" style="max-width: 600px;">
+    {% csrf_token %}
+
+    <div class="mb-3">
+      {{ form.menu_item.label_tag }}
+      {{ form.menu_item }}
+      {{ form.menu_item.errors }}
+    </div>
+
+    <div class="mb-3">
+      {{ form.title.label_tag }}
+      {{ form.title }}
+      {{ form.title.errors }}
+    </div>
+
+    <div class="mb-3">
+      <label for="{{ form.rating.id_for_label }}">Rating: <span id="sliderValue">3</span></label>
+      {{ form.rating }}
+      {{ form.rating.errors }}
+    </div>
+
+    <div class="mb-3">
+      {{ form.body.label_tag }}
+      {{ form.body }}
+      {{ form.body.errors }}
+    </div>
+
+    <div class="text-center">
       <button type="submit" class="registration_button mb-2">Submit Review</button>
-    </form>
+    </div>
+  </form>
   </div>
 </div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const slider = document.querySelector('input[type="range"]');
+    const valueDisplay = document.getElementById('sliderValue');
+    if (slider && valueDisplay) {
+      valueDisplay.textContent = slider.value;
+      slider.addEventListener('input', function () {
+        valueDisplay.textContent = this.value;
+      });
+    }
+  });
+</script>
+
 {% endblock %}

@@ -59,7 +59,7 @@ def create_review(request, menu_item_id=None):
         if form.is_valid():
             print("Valid Form")
             review = form.save(commit=False)
-            review.menu_item = menu_item
+            review.menu_item = menu_item if menu_item else form.cleaned_data['menu_item']
             review.user = request.user
             review.approved = False  # Ensure new review is pending approval
             review.save()

@@ -7,5 +7,16 @@ class ReviewForm(forms.ModelForm):
         model = Review
         fields = ['rating', 'menu_item', 'title', 'body']
         widgets = {
-            'rating': forms.RadioSelect(),
+            'rating': forms.NumberInput(attrs={
+                'type': 'range',
+                'min': 1,
+                'max': 5,
+                'class': 'form-range',
+            }),
+            'title': forms.TextInput(attrs={'class': 'form-control'}),
+            'body': forms.Textarea(attrs={
+                'class': 'form-control',
+                'rows': 5
+            }),
+            'menu_item': forms.Select(attrs={'class': 'form-control'}),
         }
