@@ -1,43 +1,40 @@
 {% extends 'base.html' %}
+{% load i18n crispy_forms_tags %}
 
 {% block content %}
 <div class="page-bg">
-  <div class="form-block center mx-auto">
+  <div class="form-block center mx-auto px-2">
     <div class="row form-header">
-      <div class="col">
-        <h2 class="text-center mb-4 mt-4"><i class="fa-solid fa-envelope"></i> CONTACT US <i class="fa-solid fa-envelope"></i></h2>
+      <div class="col text-center mt-3">
+        <h2 class="logo-font"><i class="fa-solid fa-envelope"></i> CONTACT US <i class="fa-solid fa-envelope"></i></h2>
       </div>
     </div>
 
+    <form class="mx-auto text-start" style="max-width: 600px;" method="post" novalidate>
+    {% csrf_token %}
+    {{ form.non_field_errors }}
 
-    {% if messages %}
-      {% for message in messages %}
-        <div class="alert alert-success">{{ message }}</div>
-      {% endfor %}
-    {% endif %}
+    <div class="my-3">
+      {{ form.name.label_tag }}
+      {{ form.name }}
+      {{ form.name.errors }}
+    </div>
 
-    <form class="mx-auto text-center mt-4" method="post" novalidate>
-      {% csrf_token %}
-      {{ form.non_field_errors }}
-      <div class="my-3">
-        {{ form.name.label_tag }}
-        {{ form.name }}
-        {{ form.name.errors }}
-      </div>
-      <div class="mb-3">
-        {{ form.email.label_tag }}
-        {{ form.email }}
-        {{ form.email.errors }}
-      </div>
-      <div class="mb-3">
-        {{ form.message.label_tag }}
-        <br>
-        {{ form.message }}
-        {{ form.message.errors }}
-      </div>
-      <div class="text-center">
-        <button type="submit" class="btn btn-black w-50 mb-4">Send Message</button>
-      </div>
+    <div class="mb-3">
+      {{ form.email.label_tag }}
+      {{ form.email }}
+      {{ form.email.errors }}
+    </div>
+
+    <div class="mb-3">
+      {{ form.message.label_tag }}
+      {{ form.message }}
+      {{ form.message.errors }}
+    </div>
+
+    <div class="text-center">
+      <button type="submit" class="btn btn-black w-50 mb-4">Send Message</button>
+    </div>
     </form>
   </div>
 </div>
