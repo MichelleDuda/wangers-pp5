@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="page-bg">
+  <div class="form-block center mx-auto">
+    <div class="row form-header">
+      <div class="col">
+        <h1 class="text-center mb-4 mt-4">Customer Reviews</h1>
+      </div>
+    </div>
+
+    <a href="{% url 'add_review' %}" class="btn btn-primary mb-3">Leave a Review</a>
+
+    {% if reviews %}
+      {% for review in reviews %}
+        <div class="review mb-4 p-3 rounded border">
+          <h2>{{ review.title }}</h2>
+          
+          <!-- Rating Section -->
+          <div class="mb-2">
+            {% for i in "12345" %}
+              {% if forloop.counter <= review.rating %}
+                <i class="fas fa-pepper-hot text-danger"></i>
+              {% else %}
+                <i class="fas fa-pepper-hot text-muted"></i>
+              {% endif %}
+            {% endfor %}
+          </div>
+
+          <p>{{ review.body|linebreaks }}</p>
+          
+          <!-- Like Button -->
+          <div class="mb-2">
+            <form action="{% url 'toggle_like' review.id %}" method="post">
+              {% csrf_token %}
+              <button type="submit" class="btn btn-sm {% if review.has_liked %}btn-danger{% else %}btn-outline-danger{% endif %}">
+                <i class="fas fa-heart"></i> {{ review.total_likes }}
+              </button>
+            </form>
+          </div>
+          <p class="mb-1"><strong>{{ review.user.username }}</strong> on {{ review.created_at|date:"M d, Y" }}</p>
+          
+          <!-- Edit/Delete Buttons (only for review creator) -->
+          {% if user == review.user %}
+            <div class="mt-2">
+              <a href="{% url 'edit_review' review.id %}" class="btn btn-sm btn-outline-secondary me-2">Edit</a>
+              <a href="{% url 'delete_review' review.id %}" class="btn btn-sm btn-outline-danger">Delete</a>
+            </div>
+          {% endif %}
+
+        </div>
+      {% endfor %}
+
+      {% if is_paginated %}
+        <div class="pagination">
+          {% if page_obj.has_previous %}
+            <a href="?page={{ page_obj.previous_page_number }}">Previous</a>
+          {% endif %}
+
+          <span>Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span>
+
+          {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}">Next</a>
+          {% endif %}
+        </div>
+      {% endif %}
+    {% else %}
+      <p class="text-center">No reviews yet.</p>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

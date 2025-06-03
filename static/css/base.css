@@ -141,7 +141,7 @@ footer p {
     height: 450px;
 }
 
-#hero-cover-text, #error404-cover-text {
+#hero-cover-text, .error-cover-text {
     background: #00000091;
     color: white;
     font-size: 125%; 
@@ -240,7 +240,7 @@ footer p {
 }
 
 /* ----------------------------------------------------------------------- Error Page Styling */
-#error404 {
+.errorpage {
     background: url('/media/404.jpg') no-repeat center center / cover;
     width: 100%;
     position: relative;

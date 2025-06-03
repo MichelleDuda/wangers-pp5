@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% load i18n crispy_forms_tags %}
+
+{% block head_title %}{% trans "Leave a Review" %}{% endblock %}
+
+{% block content %}
+<div class="page-bg">
+  <div class="form-block center mx-auto px-2">
+    <div class="row form-header">
+      <div class="col">
+        <h1 class="text-center mb-4 mt-4"><i class="fa-solid fa-pencil"></i>{% trans " WRITE A REVIEW " %}<i class="fa-solid fa-pencil"></i></h1>
+      </div>
+    </div>
+
+    <h2 class="text-center my-4">
+      {% if form.instance.pk %}
+        {% trans "Edit Your Review" %}
+      {% else %}
+        {% trans "Leave a Review" %}
+      {% endif %}
+    </h2>
+
+    <form method="post" action="" class="mx-auto text-center">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button type="submit">Submit Review</button>
+    </form>
+  </div>
+</div>
+{% endblock %}

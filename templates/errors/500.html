@@ -1,17 +1,14 @@
 {% extends "base.html" %}
 {% block content %}
 
-<div class="container-fluid">
-    <div class="row mx-auto text-center">
-        <div class="card p-5">
-            <div class="card-body">
-                <h1>500 - Server Error</h1>
-                <p>Oops! Something went wrong on our end. Please try again later.</p>
-                <a href="{% url 'home' %}">Go back to Home</a>
-            </div>
-        </div>
-    </div>
+<section class="errorpage">
+    <div class="error-cover-text">
+        <h2>500 - Internal Server Error</h2>
+        <p>Oops! Looks like something went wrong on our end — our internal servers have cooked up a mess.</p>
+        <p>Try refreshing the page, or swing back in a bit once the smoke clears.</p>
+        <a href="{% url 'home' %}">Back to Homepage</a>
 </div>
+</section>
 
 
 {% endblock %}
