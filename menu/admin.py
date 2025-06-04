@@ -11,6 +11,7 @@ class MenuItemAdmin (admin.ModelAdmin):
 
     ordering = ('name',)
 
+
 admin.site.register(MenuItem, MenuItemAdmin)
 admin.site.register(Category)
 admin.site.register(Sauce)

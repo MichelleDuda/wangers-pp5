@@ -14,7 +14,7 @@ def index(request):
         'hide_toast_cart': hide_toast_cart,
         'form': form
     }
-   
+
     return render(request, 'home/index.html', context)
 
 
@@ -27,24 +27,34 @@ def contact_view(request):
 
             send_mail(
                 "Thanks for contacting us!",
-                "Hi {},\n\nThanks for reaching out. We’ll get back to you shortly.\n\n- Your Restaurant Team".format(contact.name),
+                (
+                    "Hi {},\n\nThanks for reaching out. We’ll get back to you "
+                    "shortly.\n\n- The Wangers Team".format(contact.name)
+                ),
                 settings.DEFAULT_FROM_EMAIL,
                 [contact.email],
                 fail_silently=False,
             )
-
-            messages.success(request, "Your message has been submitted. We'll be in touch soon!")
+            messages.success(
+                request,
+                "Your message has been submitted. We'll be in touch soon!"
+            )
             return redirect('contact')
     else:
         form = ContactForm()
     return render(request, 'home/contact.html', {'form': form})
 
+
 def newsletter_signup(request):
+    '''A view to handle newletter signup submission'''
     if request.method == 'POST':
         form = NewsletterSignupForm(request.POST)
         if form.is_valid():
             form.save()
-            messages.success(request, "You’ve been signed up for the newsletter!")
+            messages.success(
+                request,
+                "You’ve been signed up for the newsletter!"
+            )
             request.session['hide_toast_cart'] = True
         else:
             messages.error(request, "Please enter a valid email.")

@@ -1,6 +1,7 @@
 from django import forms
 from .models import MenuItem, Category
 
+
 class MenuItemForm(forms.ModelForm):
 
     class Meta:

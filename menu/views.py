@@ -8,10 +8,9 @@ from collections import defaultdict
 from django.utils.safestring import mark_safe
 from .forms import MenuItemForm
 
-# Create your views here.
-
 
 def all_menu_items(request):
+    '''A view to display the full menu'''
     query = None
     categories = Category.objects.all()
     items_by_category = []
@@ -20,32 +19,50 @@ def all_menu_items(request):
     if request.GET:
         if 'dietary_restriction' in request.GET:
             restriction_names = request.GET['dietary_restriction'].split(',')
-            dietary_restrictions = DietaryRestriction.objects.filter(name__in=restriction_names)
+            dietary_restrictions = DietaryRestriction.objects.filter(
+                name__in=restriction_names
+            )
 
         if 'q' in request.GET:
             query = request.GET['q']
             if not query:
-                messages.error(request, "You didn't enter any search criteria!")
-                return redirect(reverse('menu'))       
+                messages.error(
+                    request,
+                    "You didn't enter any search criteria!"
+                )
+                return redirect(reverse('menu'))
 
     for category in categories:
-        menu_items = MenuItem.objects.filter(category=category, is_available=True)
+        menu_items = MenuItem.objects.filter(
+            category=category,
+            is_available=True
+        )
 
         if dietary_restrictions:
             restriction_ids = dietary_restrictions.values_list('id', flat=True)
-            menu_items = menu_items.filter(dietary_restriction__in=restriction_ids)
+            menu_items = menu_items.filter(
+                dietary_restriction__in=restriction_ids
+            )
 
         if query:
-            search_filter = Q(name__icontains=query) | Q(description__icontains=query)
+            search_filter = (
+                Q(name__icontains=query) |
+                Q(description__icontains=query)
+            )
             menu_items = menu_items.filter(search_filter)
 
         if menu_items.exists():
             items_by_category.append((category, menu_items))
-    
+
     if query and not items_by_category:
         messages.info(
-            request, 
-            mark_safe("Even our wings have limits — for now. Craving something we don’t serve? Hit our <a href='/contact/'>contact form</a> and help us spread our... wings.")
+            request,
+            mark_safe(
+                "Even our wings have limits — for now. "
+                "Craving something we don’t serve? "
+                "Hit our <a href='/contact/'>contact form</a> "
+                "and help us spread our... wings."
+            )
         )
         return redirect(reverse('menu'))
 
@@ -80,7 +97,7 @@ def add_menu_item(request):
     if not request.user.is_superuser:
         messages.error(request, "Sorry, only admins can do that.")
         return redirect(reverse('home'))
-    
+
     if request.method == 'POST':
         form = MenuItemForm(request.POST, request.FILES)
         if form.is_valid():
@@ -88,16 +105,20 @@ def add_menu_item(request):
             messages.success(request, 'Successfully added Menu Item!')
             return redirect(reverse('add_menu_item'))
         else:
-            messages.error(request, 'Failed to add menu item. Please ensure the form is valid.')
+            messages.error(
+                request,
+                'Failed to add menu item. Please ensure the form is valid.'
+            )
     else:
         form = MenuItemForm()
-    
+
     template = 'menu/add_menu_item.html'
     context = {
         'form': form,
     }
 
     return render(request, template, context)
+
 
 @login_required
 def edit_menu_item(request, menuitem_id):
@@ -114,7 +135,10 @@ def edit_menu_item(request, menuitem_id):
             messages.success(request, 'Successfully updated product!')
             return redirect(reverse('menu_item_detail', args=[menuitem.id]))
         else:
-            messages.error(request, 'Failed to update product. Please ensure the form is valid.')
+            messages.error(
+                request,
+                'Failed to update product. Please ensure the form is valid.'
+            )
     else:
         form = MenuItemForm(instance=menuitem)
         messages.info(request, f'You are editing {menuitem.name}')
@@ -126,6 +150,7 @@ def edit_menu_item(request, menuitem_id):
     }
 
     return render(request, template, context)
+
 
 @login_required
 def delete_menu_item(request, menuitem_id):
