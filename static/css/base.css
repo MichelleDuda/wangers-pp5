@@ -208,7 +208,7 @@ footer p {
 
 /* ----------------------------------------------------------------------------------- Index.Html Styles */
 #hero {
-    background: url('/media/hero.jpg') no-repeat center center / cover;
+    background: url('/media/hero.webp') no-repeat center center / cover;
     width: 100%;
     position: relative;
     height: 450px;
@@ -370,7 +370,7 @@ footer p {
 
 /* ----------------------------------------------------------------------- Error Page Styling */
 .errorpage {
-    background: url('/media/404.jpg') no-repeat center center / cover;
+    background: url('/media/404.webp') no-repeat center center / cover;
     width: 100%;
     position: relative;
     height: 450px;
@@ -413,14 +413,14 @@ footer p {
 }
 
 .page-bg {
-    background: url('/media/hero.jpg') no-repeat center center / cover;
+    background: url('/media/hero.webp') no-repeat center center / cover;
     width: 100%;
     padding-top: 20px;
     padding-bottom: 20px;
 }
 
 .fixed-page-bg {
-    background: url('/media/hero.jpg') no-repeat center center / cover;
+    background: url('/media/hero.webp') no-repeat center center / cover;
     position: fixed;
     top: 0;
     left: 0;
