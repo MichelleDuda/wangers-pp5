@@ -1,5 +1,7 @@
 from decimal import Decimal
-from django.shortcuts import render, redirect, reverse, HttpResponse, get_object_or_404
+from django.shortcuts import (
+    render, redirect, reverse, HttpResponse, get_object_or_404
+)
 from django.contrib import messages
 from django.views.decorators.http import require_POST
 from .forms import OrderForm
@@ -22,15 +24,19 @@ def cache_checkout_data(request):
         client_secret = request.POST.get('client_secret', '')
         if not client_secret:
             raise ValueError("Missing client_secret in POST data")
-        
+
         pid = client_secret.split('_secret')[0]
         stripe.api_key = settings.STRIPE_SECRET_KEY
-        
+
         delivery_method = request.POST.get('delivery_method', 'pickup')
         request.session['delivery_method'] = delivery_method
-        
-        username = request.user.username if request.user.is_authenticated else 'AnonymousUser'
-        
+
+        username = (
+            request.user.username
+            if request.user.is_authenticated
+            else 'AnonymousUser'
+        )
+
         stripe.PaymentIntent.modify(pid, metadata={
             'cart': json.dumps(request.session.get('cart', {})),
             'save_info': request.POST.get('save_info', 'false'),
@@ -40,6 +46,7 @@ def cache_checkout_data(request):
         return HttpResponse(status=200)
     except Exception as e:
         return HttpResponse(content=str(e), status=400)
+
 
 def create_payment_intent(request):
     if request.method == 'POST':
@@ -59,7 +66,9 @@ def create_payment_intent(request):
 
         if payment_intent_id:
             try:
-                existing_intent = stripe.PaymentIntent.retrieve(payment_intent_id)
+                existing_intent = stripe.PaymentIntent.retrieve(
+                    payment_intent_id
+                )
                 if existing_intent.status == 'succeeded':
                     # Clear the old one — it's already paid
                     del request.session['payment_intent_id']
@@ -103,6 +112,7 @@ def create_payment_intent(request):
 
     return JsonResponse({'error': 'Invalid request'}, status=400)
 
+
 def checkout(request):
     stripe_public_key = settings.STRIPE_PUBLIC_KEY
     stripe_secret_key = settings.STRIPE_SECRET_KEY
@@ -113,7 +123,7 @@ def checkout(request):
         request.session['delivery_method'] = delivery_method
 
         cart = request.session.get('cart', {})
-        
+
         form_data = {
             'full_name': request.POST['full_name'],
             'email': request.POST['email'],
@@ -139,7 +149,9 @@ def checkout(request):
             if delivery_method == 'pickup':
                 order.delivery_cost = 0
             else:
-                order.delivery_cost = Decimal(request.session.get('delivery_cost', '0.00'))
+                order.delivery_cost = Decimal(
+                    request.session.get('delivery_cost', '0.00')
+                )
 
             order.save()
 
@@ -160,7 +172,10 @@ def checkout(request):
                         try:
                             sauce = Sauce.objects.get(pk=sauce_id)
                         except Sauce.DoesNotExist:
-                            messages.error(request, "Missing sauce. Please review your cart.")
+                            messages.error(
+                                request,
+                                "Missing sauce. Please review your cart."
+                            )
                             order.delete()
                             return redirect(reverse('view_cart'))
 
@@ -175,21 +190,32 @@ def checkout(request):
                     order_line_item.save()
 
                 except MenuItem.DoesNotExist:
-                    messages.error(request, "Missing item. Please review your cart.")
+                    messages.error(
+                        request,
+                        "Missing item. Please review your cart."
+                    )
                     order.delete()
                     return redirect(reverse('view_cart'))
 
             order.stripe_pid = pid
 
             request.session['save_info'] = 'save-info' in request.POST
-            return redirect(reverse('checkout_success', args=[order.order_number]))
+            return redirect(
+                reverse('checkout_success', args=[order.order_number])
+            )
         else:
-            messages.error(request, 'There was an error with your form. Please try again.')
+            messages.error(
+                request,
+                'There was an error with your form. Please try again.'
+            )
 
     else:
         cart = request.session.get('cart', {})
         if not cart:
-            messages.error(request, "There's nothing in your cart at the moment!")
+            messages.error(
+                request,
+                "There's nothing in your cart at the moment!"
+            )
             return redirect(reverse('menu'))
 
         current_cart = cart_contents(request)
@@ -244,6 +270,7 @@ def checkout(request):
             'order': order,
         })
 
+
 def checkout_success(request, order_number):
     """
     Handle successful checkouts
@@ -266,18 +293,23 @@ def checkout_success(request, order_number):
                     'default_street_address2': order.street_address2,
                     'default_state': order.state,
                 }
-                user_profile_form = UserProfileForm(profile_data, instance=profile)
+                user_profile_form = UserProfileForm(
+                    profile_data,
+                    instance=profile
+                )
                 if user_profile_form.is_valid():
                     user_profile_form.save()
         except UserProfile.DoesNotExist:
             pass
 
-    messages.success(request, f'Order successfully processed! '
-        f'Your order number is {order_number}. A confirmation '
-        f'email will be sent to {order.email}.')  
+    messages.success(
+        request,
+        f'Order successfully processed! Your order number is {order_number}. '
+        f'A confirmation email will be sent to {order.email}.'
+    )
     if 'cart' in request.session:
         del request.session['cart']
-    
+
     if 'payment_intent_id' in request.session:
         del request.session['payment_intent_id']
 

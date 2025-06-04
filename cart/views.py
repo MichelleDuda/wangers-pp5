@@ -1,16 +1,17 @@
 from decimal import Decimal
 from django.contrib import messages
-from django.shortcuts import render, redirect, get_object_or_404, reverse, HttpResponse
+from django.shortcuts import (
+    render, redirect, get_object_or_404, reverse, HttpResponse
+)
 from django.conf import settings
 from django.http import JsonResponse
 from django.views.decorators.http import require_POST
 from menu.models import MenuItem
 
-# Create your views here.
 
 def view_cart(request):
     ''' A view to retrun the shopping cart '''
-    
+
     return render(request, 'cart/cart.html')
 
 
@@ -19,7 +20,7 @@ def add_to_cart(request, item_id):
 
     menu_item = get_object_or_404(MenuItem, pk=item_id)
     quantity = int(request.POST.get('quantity'))
-    sauce_id = request.POST.get ('sauce', None)
+    sauce_id = request.POST.get('sauce', None)
     redirect_url = request.POST.get('redirect_url')
     cart = request.session.get('cart', {})
 
@@ -46,7 +47,7 @@ def adjust_cart(request, item_id):
 
     menu_item = get_object_or_404(MenuItem, pk=item_id)
     quantity = int(request.POST.get('quantity'))
-    sauce_id = request.POST.get ('sauce', None)
+    sauce_id = request.POST.get('sauce', None)
     redirect_url = request.POST.get('redirect_url')
     cart = request.session.get('cart', {})
 
@@ -89,7 +90,7 @@ def remove_from_cart(request, item_id):
     except Exception as e:
         messages.error(f"Error removing item: {e}")
         return HttpResponse(status=500)
-    
+
 
 @require_POST
 def update_delivery_method(request):
@@ -108,14 +109,15 @@ def update_delivery_method(request):
             menu_item = MenuItem.objects.get(pk=item_id)
             total += quantity * menu_item.price
         except MenuItem.DoesNotExist:
-            continue 
+            continue
 
     # Determine delivery cost
     if method == 'pickup':
         delivery_cost = 0
     else:
         if total < settings.FREE_DELIVERY_THRESHOLD:
-            delivery_cost = total * Decimal(settings.STANDARD_DELIVERY_PERCENTAGE / 100)
+            percentage = settings.STANDARD_DELIVERY_PERCENTAGE / 100
+            delivery_cost = total * Decimal(percentage)
         else:
             delivery_cost = Decimal('0.00')
 

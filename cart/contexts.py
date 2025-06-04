@@ -47,7 +47,9 @@ def cart_contents(request):
         free_delivery_delta = Decimal('0.00')
     else:
         free_delivery_threshold = Decimal(settings.FREE_DELIVERY_THRESHOLD)
-        standard_delivery_percentage = Decimal(settings.STANDARD_DELIVERY_PERCENTAGE)
+        standard_delivery_percentage = Decimal(
+            settings.STANDARD_DELIVERY_PERCENTAGE
+        )
 
         if total < free_delivery_threshold:
             delivery = total * (standard_delivery_percentage / 100)

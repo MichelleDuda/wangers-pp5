@@ -59,5 +59,8 @@ class OrderForm(forms.ModelForm):
             required_fields = ['postcode', 'town_or_city', 'street_address1']
             for field in required_fields:
                 if not cleaned_data.get(field):
-                    self.add_error(field, 'This field is required for delivery.')
+                    self.add_error(
+                        field,
+                        'This field is required for delivery.'
+                    )
         return cleaned_data
