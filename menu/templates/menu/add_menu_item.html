@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block page_header %}
+{% endblock %}
+
+{% block content %}
+<div class="fixed-page-bg"></div>
+    <div class="form-block mx-auto my-4">
+        <div class="row form-header">
+            <div class="col text-center mt-3">
+                <h2 class="logo-font mb-4 text-center"><i class="fa-solid fa-drumstick-bite"></i> Menu Management <i class="fa-solid fa-drumstick-bite"></i></h2>
+                <h3 class="text-muted">Add a Menu Item</h3>
+                <hr class="w-50 mx-auto mb-1">
+            </div>
+        </div>
+
+        <div class="row mt-2">
+            <div class="col-md-6 mx-auto px-2">
+                <form method="POST" action="{% url 'add_menu_item' %}" class="form mb-2" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {{ form | crispy }}
+                    <div class="text-right">
+                        <a class="btn btn-outline-black rounded-0" href="{% url 'menu' %}">Cancel</a>
+                        <button class="btn btn-black rounded-0" type="submit">Add Product</button>
+                    </div>
+                </form>
+            </div>            
+        </div>
+    </div>
+{% endblock %}

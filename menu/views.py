@@ -5,6 +5,7 @@ from .models import MenuItem, Category, DietaryRestriction
 from django.db.models import Q
 from collections import defaultdict
 from django.utils.safestring import mark_safe
+from .forms import MenuItemForm
 
 # Create your views here.
 
@@ -70,3 +71,56 @@ def menu_item_detail(request, menu_item_id):
     }
 
     return render(request, 'menu/menu_item_detail.html', context)
+
+
+def add_menu_item(request):
+    """ Add a menu item to the menu """
+    if request.method == 'POST':
+        form = MenuItemForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Successfully added Menu Item!')
+            return redirect(reverse('add_menu_item'))
+        else:
+            messages.error(request, 'Failed to add menu item. Please ensure the form is valid.')
+    else:
+        form = MenuItemForm()
+    
+    template = 'menu/add_menu_item.html'
+    context = {
+        'form': form,
+    }
+
+    return render(request, template, context)
+
+
+def edit_menu_item(request, menuitem_id):
+    """ Edit a menu item """
+    menuitem = get_object_or_404(MenuItem, pk=menuitem_id)
+    if request.method == 'POST':
+        form = MenuItemForm(request.POST, request.FILES, instance=menuitem)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Successfully updated product!')
+            return redirect(reverse('menu_item_detail', args=[menuitem.id]))
+        else:
+            messages.error(request, 'Failed to update product. Please ensure the form is valid.')
+    else:
+        form = MenuItemForm(instance=menuitem)
+        messages.info(request, f'You are editing {menuitem.name}')
+
+    template = 'menu/edit_menu_item.html'
+    context = {
+        'form': form,
+        'menuitem': menuitem,
+    }
+
+    return render(request, template, context)
+
+
+def delete_menu_item(request, menuitem_id):
+    """ Delete a menu item """
+    menuitem = get_object_or_404(MenuItem, pk=menuitem_id)
+    menuitem.delete()
+    messages.success(request, 'Menu Item deleted!')
+    return redirect(reverse('menu'))

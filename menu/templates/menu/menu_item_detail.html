@@ -41,6 +41,13 @@
                     </p>
                 {% endif %}
 
+                {% if request.user.is_superuser %}
+                    <small class="ml-3">
+                        <a href="{% url 'edit_menu_item' menu_item.id %}">Edit</a> | 
+                        <a class="text-danger" href="{% url 'delete_menu_item' menu_item.id %}">Delete</a>
+                    </small>
+                {% endif %}
+
                 <form method="post" action="{% url 'add_to_cart' menu_item.id %}">
                     {% csrf_token %}
                     <div class="form-row">
