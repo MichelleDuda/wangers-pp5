@@ -17,8 +17,7 @@ body {
 }
 
 main {
-    margin-top: 188px;
-    margin-bottom: 10px;
+    margin-top: 144px;
     overflow: hidden;
 }
 
@@ -481,8 +480,11 @@ footer p {
         width: 164px;
         height: 164px;
         object-fit: cover;
-      }
+    }
     
+    main {
+    margin-top: 188px;
+    }
 }
 @media (min-width: 768px) {
     #about-us-section {
@@ -508,5 +510,11 @@ footer p {
 
     #social-networks {
         flex-direction: column;
+    }
+}
+
+@media (min-width: 576px) {
+    main {
+    margin-top: 152px;
     }
 }
