@@ -12,10 +12,12 @@ class ReviewAdmin(admin.ModelAdmin):
         queryset.update(approved=True)
     approve_reviews.short_description = "Mark selected reviews as approved"
 
+
 class LikeAdmin(admin.ModelAdmin):
-    list_display = ('user', 'review', 'created_at') 
+    list_display = ('user', 'review', 'created_at')
     search_fields = ('user__username', 'review__title')
     list_filter = ('created_at',)
+
 
 admin.site.register(Like, LikeAdmin)
 admin.site.register(Review, ReviewAdmin)

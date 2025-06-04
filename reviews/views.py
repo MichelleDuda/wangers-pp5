@@ -43,7 +43,10 @@ class ReviewListView(ListView):
 
         context['menu_items'] = MenuItem.objects.all()
         context['request'] = self.request
-        context['hide_toast_cart'] = self.request.session.pop('hide_toast_cart', False)
+        context['hide_toast_cart'] = self.request.session.pop(
+            'hide_toast_cart',
+            False
+        )
 
         return context
 
@@ -59,15 +62,27 @@ def create_review(request, menu_item_id=None):
         if form.is_valid():
             print("Valid Form")
             review = form.save(commit=False)
-            review.menu_item = menu_item if menu_item else form.cleaned_data['menu_item']
+            review.menu_item = (
+                menu_item if menu_item else form.cleaned_data['menu_item']
+            )
             review.user = request.user
             review.approved = False  # Ensure new review is pending approval
             review.save()
-            messages.success(request, "Your review has been submitted for approval.")
+            messages.success(
+                request,
+                "Your review has been submitted for approval."
+            )
             request.session['hide_toast_cart'] = True
             return redirect('review_list')
         else:
-            messages.success(request, "There was an error processing your review. Please try again or contact us if you continue to have trouble!")
+            messages.success(
+                request,
+                (
+                    "There was an error processing your review. "
+                    "Please try again or "
+                    "contact us if you continue to have trouble!"
+                )
+            )
     else:
         form = ReviewForm()
 
@@ -84,15 +99,20 @@ def create_review(request, menu_item_id=None):
 def edit_review(request, review_id):
     review = get_object_or_404(Review, id=review_id)
     if review.user != request.user:
-        return HttpResponseForbidden("You are not allowed to edit this review.")
-    
+        return HttpResponseForbidden(
+            "You are not allowed to edit this review."
+        )
+
     if request.method == 'POST':
         form = ReviewForm(request.POST, instance=review)
         if form.is_valid():
             edited_review = form.save(commit=False)
             edited_review.approved = False  # Need re-approval after edit
             edited_review.save()
-            messages.success(request, "Your review has been updated and submitted for re-approval.")
+            messages.success(
+                request,
+                "Your review has been updated and submitted for re-approval."
+            )
             request.session['hide_toast_cart'] = True
             return redirect('review_list')
     else:
@@ -104,12 +124,15 @@ def edit_review(request, review_id):
         'hide_toast_cart': True,
     })
 
+
 @login_required
 def delete_review(request, review_id):
     review = get_object_or_404(Review, id=review_id)
     if review.user != request.user:
-        return HttpResponseForbidden("You are not allowed to delete this review.")
-    
+        return HttpResponseForbidden(
+            "You are not allowed to delete this review."
+        )
+
     menu_item_id = review.menu_item.id
     review.delete()
     return redirect('review_list')
@@ -118,7 +141,10 @@ def delete_review(request, review_id):
 def toggle_like(request, review_id):
     ''' A view to toggle the like feature for a review'''
     review = get_object_or_404(Review, id=review_id)
-    like, created = Like.objects.get_or_create(user=request.user, review=review)
+    like, created = Like.objects.get_or_create(
+        user=request.user,
+        review=review
+    )
 
     if not created:
         like.delete()

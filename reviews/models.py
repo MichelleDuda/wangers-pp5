@@ -8,8 +8,18 @@ from django.utils import timezone
 class Review(models.Model):
     RATING_CHOICES = [(i, str(i)) for i in range(1, 6)]
 
-    menu_item = models.ForeignKey(MenuItem, on_delete=models.CASCADE, related_name='reviews', null=True, blank=True)
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='reviews')
+    menu_item = models.ForeignKey(
+        MenuItem,
+        on_delete=models.CASCADE,
+        related_name='reviews',
+        null=True,
+        blank=True
+    )
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name='reviews'
+    )
     rating = models.PositiveSmallIntegerField(choices=RATING_CHOICES)
     title = models.CharField(max_length=100)
     body = models.TextField()
@@ -19,7 +29,7 @@ class Review(models.Model):
 
     def total_likes(self):
         return self.likes.count()
-    
+
     def has_liked(self, user):
         if not user.is_authenticated:
             return False
@@ -31,7 +41,11 @@ class Review(models.Model):
 
 class Like(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    review = models.ForeignKey(Review, on_delete=models.CASCADE, related_name='likes')
+    review = models.ForeignKey(
+        Review,
+        on_delete=models.CASCADE,
+        related_name='likes'
+    )
     created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
