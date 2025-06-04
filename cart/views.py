@@ -29,7 +29,11 @@ def add_to_cart(request, item_id):
     add_on_ids_sorted = sorted(add_on_ids)
     add_ons_key_part = "_".join(add_on_ids_sorted) if add_on_ids_sorted else ""
 
-    key = f"{item_id}_{sauce_id}_{add_ons_key_part}" if sauce_id or add_ons_key_part else str(item_id)
+    key = (
+        f"{item_id}_{sauce_id}_{add_ons_key_part}"
+        if sauce_id or add_ons_key_part
+        else str(item_id)
+    )
 
     if key in cart:
         cart[key]['quantity'] += quantity
@@ -61,7 +65,11 @@ def adjust_cart(request, item_id):
     add_on_ids_sorted = sorted(add_on_ids)
     add_ons_key_part = "_".join(add_on_ids_sorted) if add_on_ids_sorted else ""
 
-    key = f"{item_id}_{sauce_id}_{add_ons_key_part}" if sauce_id or add_ons_key_part else str(item_id)
+    key = (
+        f"{item_id}_{sauce_id}_{add_ons_key_part}"
+        if sauce_id or add_ons_key_part
+        else str(item_id)
+    )
 
     if key in cart:
         if quantity > 0:

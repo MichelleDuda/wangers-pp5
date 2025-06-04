@@ -32,7 +32,6 @@ def cart_contents(request):
         print(f"Cart key: {key}, item_id: {item_id}, sauce_id: {sauce_id}")
         print(f"Sauce object: {sauce}")
 
-
         quantity = item_data.get('quantity', 1)
 
         # Calculate Add On Portion
@@ -60,7 +59,6 @@ def cart_contents(request):
     if 'delivery_method' not in request.session:
         request.session['delivery_method'] = 'delivery'
     delivery_method = request.session.get('delivery_method')
-    print("Delivery method in session:", request.session.get('delivery_method'))
 
     if delivery_method == 'pickup':
         delivery = Decimal('0.00')

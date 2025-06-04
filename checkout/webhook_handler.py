@@ -3,7 +3,7 @@ from django.core.mail import send_mail
 from django.template.loader import render_to_string
 from django.conf import settings
 from .models import Order, OrderLineItem
-from menu.models import MenuItem, Sauce
+from menu.models import MenuItem, Sauce, AddOn
 from profiles.models import UserProfile
 
 import stripe
@@ -145,6 +145,10 @@ class StripeWH_Handler:
                     if len(parts) > 1 and parts[1] != 'None'
                     else None
                 )
+                add_on_ids = (
+                    [int(aid) for aid in parts[2:] if aid.isdigit()]
+                    if len(parts) > 2 else []
+                )
                 quantity = item_data['quantity']
 
                 menu_item = MenuItem.objects.get(pk=item_id)
@@ -156,6 +160,12 @@ class StripeWH_Handler:
                     quantity=quantity,
                     sauce=sauce,
                 )
+
+                if add_on_ids:
+                    add_ons = AddOn.objects.filter(id__in=add_on_ids)
+                    order_line_item.addons.set(add_ons)
+                    order_line_item.save()
+                    
 
         except Exception as e:
             # If error occurs, delete incomplete order to avoid corrupt data

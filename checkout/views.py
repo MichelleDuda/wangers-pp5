@@ -158,14 +158,29 @@ def checkout(request):
             for key, item_data in cart.items():
                 parts = key.split('_')
                 item_id = int(parts[0])
-                sauce_id = int(parts[1]) if len(parts) > 1 and parts[1] != 'None' else None
+                sauce_id = (
+                    int(parts[1])
+                    if (
+                        len(parts) > 1
+                        and parts[1] != 'None'
+                    )
+                    else None
+                )
                 add_on_ids = parts[2:] if len(parts) > 2 else []
 
                 try:
                     menu_item = MenuItem.objects.get(pk=item_id)
-                    sauce = Sauce.objects.get(pk=sauce_id) if sauce_id else None
+                    sauce = (
+                        Sauce.objects.get(pk=sauce_id)
+                        if sauce_id
+                        else None
+                    )
                     quantity = item_data.get('quantity', 1)
-                    add_on_ids = [int(aid) for aid in parts[2:] if aid.isdigit()] if len(parts) > 2 else []
+                    add_on_ids = (
+                        [int(aid) for aid in parts[2:] if aid.isdigit()]
+                        if len(parts) > 2
+                        else []
+                    )
 
                     order_line_item = OrderLineItem(
                         order=order,
