@@ -1,131 +1,302 @@
-![CI logo](https://codeinstitute.s3.amazonaws.com/fullstack/ci_logo_small.png)
+# WANGERS
 
-Welcome USER_NAME,
+![Wangers](static/documentation/wangers.jpg)
+Link to Live Site: [Wangers Website](https://wangers-d543b0386356.herokuapp.com/)
 
-This is the Code Institute student template for Gitpod. We have preinstalled all of the tools you need to get started. It's perfectly ok to use this template as the basis for your project submissions.
+## Index - Table of Contents
+* [Introduction](#introduction)
+* [User Experience (UX)](#user-experience-ux) 
+    * [Site Goals](#site-goals) 
+* [Design](#design)
+    * [Colour](#colour)
+    * [Fonts](#fonts)
+    * [Background](#background-image)
+    * [Wireframes](#wireframes)
+    * [Database Design](#database-design-and-erd)
+* [Features](#features)
+    * [Logo & Navigation bar](#logo-and-navigation-bar)
+    * [Home Page](#home-page)
+    * [Menu Page](#menu-page)
+    * [Menu Item Detail Page](#menu-item-detail-page)
+    * [Review List Page](#review-list-page)
+    * [Review Form Page](#review-form-page)
+    * [Contact Us Page](#contact-us-page)
+    * [Admin Menu Management Pages](#admin-menu-management-pages)
+    * [Profile Page](#profile-page)
+    * [User Authentication Pages](#user-authentication-pages)
+    * [Future Features](#future-features)
+* [Agile Methodology](#agile-methodology)
+* [Technologies Used](#technologies-used)
+    * [Languages](#languages)
+    * [Frameworks, Libraries & Programs Used](#frameworks-libraries--programs-used)
+* [Testing](#testing)
+* [Deployment](#deployment)
+    * [PostgreSQL Setup](#postgresql-setup)
+    * [How This Site Was Deployed](#how-this-site-was-deployed)
+    * [How to Clone The Repository](#how-to-clone-the-repository)
+* [Credits](#credits)
+    * [Photos](#photos)
+    * [Code](#code)
 
-You can safely delete this README.md file or change it for your own project. Please do read it at least once, though! It contains some important information about Gitpod and the extensions we use. Some of this information has been updated since the video content was created. The last update to this file was: **June 18, 2024**
 
-## Gitpod Reminders
+## Introduction
+The Wangers website is designed as a flavorful destination for chicken wing lovers craving bold, saucy, and crispy delights.
 
-To run a frontend (HTML, CSS, Javascript only) application in Gitpod, in the terminal, type:
+This site serves two main purposes. First, it showcases our mouthwatering menu and irresistible deals to entice new customers to order from Wangers. Second, it provides a smooth, user-friendly platform for customers to place orders, select pickup or delivery, leave reviews and track their order history — making wing cravings easier to satisfy than ever.
 
-`python3 -m http.server`
+As a whole, the site targets wing enthusiasts looking for convenient access to fresh, delicious wings with a side of humor and bold flavor.
 
-A blue button should appear to click: _Make Public_,
+## User Experience (UX)
 
-Another blue button should appear to click: _Open Browser_.
+### Site Goals
 
-To run a backend Python file, type `python3 app.py` if your Python file is named `app.py`, of course.
+#### Site Owner Goals
 
-A blue button should appear to click: _Make Public_,
+As the site owner, I want to create a website that:
+1. is visually bold and on-brand with Wangers’ fun, flavorful identity.  
+2. is easy to navigate so customers can quickly find what they need.  
+3. showcases our menu in a way that drives online orders and builds customer loyalty.
+4. is secure and allows for an easy checkout process for our customers.   
 
-Another blue button should appear to click: _Open Browser_.
+#### User Goals
 
-By Default, Gitpod gives you superuser security privileges. Therefore, you do not need to use the `sudo` (superuser do) command in the bash terminal in any of the lessons.
+As a First-Time user I want to:
+1. quickly understand what Wangers offers. 
+2. easily find key info like menu options, locations, and hours.  
+3. be able to check out without an account.
+4. easily register for an account if I desire. 
 
-To log into the Heroku toolbelt CLI:
+As a Returning User I want to:
+1. be able to quickly log in.
+2. be able to view my previous orders. 
+3. be able to leave a review.
+4. easily submit a new order, and receive confirmation that it was successful. 
 
-1. Log in to your Heroku account and go to *Account Settings* in the menu under your avatar.
-2. Scroll down to the *API Key* and click *Reveal*
-3. Copy the key
-4. In Gitpod, from the terminal, run `heroku_config`
-5. Paste in your API key when asked
 
-You can now use the `heroku` CLI program - try running `heroku apps` to confirm it works. This API key is unique and private to you, so do not share it. If you accidentally make it public, you can create a new one with _Regenerate API Key_.
+## Design
 
-### Connecting your Mongo database
+### Colour
+The Wangers website uses a bold, orange-forward color scheme that reflects the fiery personality of the brand. The dominant shade of orange evokes the color of a flame — a perfect nod to the heat and spice of our signature buffalo wings.
 
-- **Connect to Mongo CLI on a IDE**
-- navigate to your MongoDB Clusters Sandbox
-- click **"Connect"** button
-- select **"Connect with the MongoDB shell"**
-- select **"I have the mongo shell installed"**
-- choose **mongosh (2.0 or later)** for : **"Select your mongo shell version"**
-- choose option: **"Run your connection string in your command line"**
-- in the terminal, paste the copied code `mongo "mongodb+srv://<CLUSTER-NAME>.mongodb.net/<DBname>" --apiVersion 1 --username <USERNAME>`
-  - replace all `<angle-bracket>` keys with your own data
-- enter password _(will not echo **\*\*\*\*** on screen)_
+This vibrant color not only grabs attention, but also reinforces the fun, high-energy feel of Wangers. Orange is used strategically throughout the site to highlight key buttons and calls to action, making navigation intuitive and eye-catching. Combined with black, white, and minimal neutral tones, the overall look keeps things clean while letting the brand's personality — and food — shine through.
 
-------
+### Fonts
+Google Fonts was used to import the Lato font. Lato was chosen for its clean, modern look that balances readability with personality. Its rounded, friendly feel pairs well with Wangers’ bold and approachable brand voice.
 
-## Release History
+Lato helps maintain a professional appearance while still feeling fresh and energetic.
 
-We continually tweak and adjust this template to help give you the best experience. Here is the version history:
+### Background Image
+A background image featuring a plate of crispy, golden chicken wings is used consistently across all pages of the site (with the exception of the homepage where the same image is used as the hero image with call to action button overlay). This visually reinforces the brand’s identity and keeps the focus on what matters most — the wings. 
 
-**June 18, 2024,** Add Mongo back into template
+The mouthwatering image not only sets the tone for the overall experience but also helps create an appetizing and immersive feel for visitors as they browse the site.
 
-**June 14, 2024,** Temporarily remove Mongo until the key issue is resolved
+### Wireframes
 
-**May 28 2024:** Fix Mongo and Links installs
+The  wireframes were created in Balsamiq to outline the basic structure of the site. These wireframes were kept simple, reflecting a clean professional minimalist design approach.
 
-**April 26 2024:** Update node version to 16
+<details><summary>Home Page</summary>
+<img src="static/documentation/wireframes/index.html.png">
+</details>
+<details><summary>Menu Page</summary>
+<img src="static/documentation/wireframes/">
+</details>
+<details><summary>Menu Detail Page</summary>
+<img src="static/documentation/wireframes/">
+</details>
+<details><summary>Review List Page</summary>
+<img src="static/documentation/wireframes/">
+</details>
+<details><summary>Review Form Page</summary>
+<img src="static/documentation/wireframes/">
+</details>
+<details><summary>Contact Page</summary>
+<img src="static/documentation/wireframes/">
+</details>
+<details><summary>Registration Page </summary>
+<img src="static/documentation/wireframes/">
+</details>
+<details><summary>Log In Page </summary>
+<img src="static/documentation/wireframes/">
+</details>
+<details><summary>Admin Menu Management Page </summary>
+<img src="static/documentation/wireframes/">
+</details>
 
-**September 20 2023:** Update Python version to 3.9.17.
 
-**September 1 2021:** Remove `PGHOSTADDR` environment variable.
+### Database Design and ERD
+The databse for the  ***Wangers Website** is designed to efficiently manage customer orders, menu items, sauces, add ons, mailing lists, and user profiles while ensuring flexibility for future development.
 
-**July 19 2021:** Remove `font_fix` script now that the terminal font issue is fixed.
+The core entities in the database include:
 
-**July 2 2021:** Remove extensions that are not available in Open VSX.
+- Users: Users are linked to their respective meal orders.
+- 
+- 
+- 
+- 
+- 
 
-**June 30 2021:** Combined the P4 and P5 templates into one file, added the uptime script. See the FAQ at the end of this file.
+This relational structure ensures data integrity and allows for efficient retrieval of menu items, optional extras, current & past orders, and dietary restrictions. 
 
-**June 10 2021:** Added: `font_fix` script and alias to fix the Terminal font issue
+<img src="static/documentation/ERD.jpeg">
 
-**May 10 2021:** Added `heroku_config` script to allow Heroku API key to be stored as an environment variable.
 
-**April 7 2021:** Upgraded the template for VS Code instead of Theia.
+## Features
 
-**October 21 2020:** Versions of the HTMLHint, Prettier, Bootstrap4 CDN and Auto Close extensions updated. The Python extension needs to stay the same version for now.
+### Logo and Navigation Bar
+-
+-
+-
+-
+-
+- The navigation bar is fully responsive on all screen sizes and collapses to a toggler on smaller screen sizes for ease of use.
 
-**October 08 2020:** Additional large Gitpod files (`core.mongo*` and `core.python*`) are now hidden in the Explorer, and have been added to the `.gitignore` by default.
+<img src="static/documentation/features/navbar.jpg">
+<img src="static/documentation/features/navbar_loggedin.jpg">
+<img src="static/documentation/features/navbar_collapsed.jpg">
 
-**September 22 2020:** Gitpod occasionally creates large `core.Microsoft` files. These are now hidden in the Explorer. A `.gitignore` file has been created to make sure these files will not be committed, along with other common files.
+### Home Page
+- The Home page conatins a hero image and text overlay that clearly communicates the purpose of the website.
+- A button stating "Order Now" is also included in the text overlay as a call to action for the user. This serves as a quick link to the Menu page where users can easily view menu items and add them to their cart for purchase. 
 
-**April 16 2020:** The template now automatically installs MySQL instead of relying on the Gitpod MySQL image. The message about a Python linter not being installed has been dealt with, and the set-up files are now hidden in the Gitpod file explorer.
+<img src="static/documentation/features/hero.jpg">
 
-**April 13 2020:** Added the _Prettier_ code beautifier extension instead of the code formatter built-in to Gitpod.
+- Below the hero image is a small section with some basic information about the company and a few key points to help sell our services. The text is black on a white background for simplicity and a clean look. 
 
-**February 2020:** The initialisation files now _do not_ auto-delete. They will remain in your project. You can safely ignore them. They just make sure that your workspace is configured correctly each time you open it. It will also prevent the Gitpod configuration popup from appearing.
+- Below the information section is a final section where users can sign up for a newsletter. It is a simple form with one form field allowing for a quick easy sign up. 
 
-**December 2019:** Added Eventyret's Bootstrap 4 extension. Type `!bscdn` in a HTML file to add the Bootstrap boilerplate. Check out the <a href="https://github.com/Eventyret/vscode-bcdn" target="_blank">README.md file at the official repo</a> for more options.
+<img src="static/documentation/features/homepage.jpg">
 
-------
+### Menu Page
+- 
+-
 
-## FAQ about the uptime script
 
-**Why have you added this script?**
+<img src="static/documentation/features/menu.jpg">
 
-It will help us to calculate how many running workspaces there are at any one time, which greatly helps us with cost and capacity planning. It will help us decide on the future direction of our cloud-based IDE strategy.
+### Menu Detial Page
+- 
+-
 
-**How will this affect me?**
 
-For everyday usage of Gitpod, it doesn’t have any effect at all. The script only captures the following data:
+<img src="static/documentation/features/menu.jpg">
 
-- An ID that is randomly generated each time the workspace is started.
-- The current date and time
-- The workspace status of “started” or “running”, which is sent every 5 minutes.
 
-It is not possible for us or anyone else to trace the random ID back to an individual, and no personal data is being captured. It will not slow down the workspace or affect your work.
+### User Authentication Pages
+- The site contains three main user authentication pages: Registration, Log In, and Log Out.
+- They are all styled consistently in a black and white theme.
+- They all have sumbission buttons that are styled with the same bold orange color that is seen throughout the site.  
+- The sign out feature also contains a buffer page to confirm the user's desire to sign out of their account. 
 
-**So….?**
+<img src="static/documentation/features/register.jpg">
+<img src="static/documentation/features/sign_in.jpg">
+<img src="static/documentation/features/sign_out.jpg">
 
-We want to tell you this so that we are being completely transparent about the data we collect and what we do with it.
+### Profile Page
+- The profile page contains a form where users are able to manipulate backend user data from the portal, including default delivery information. This information can also be updated via a safe information checkbox on the checkout page. 
 
-**Can I opt out?**
+<img src="static/documentation/features/profile_html.jpg">
 
-Yes, you can. Since no personally identifiable information is being captured, we'd appreciate it if you let the script run; however if you are unhappy with the idea, simply run the following commands from the terminal window after creating the workspace, and this will remove the uptime script:
+### Contact/Feeback Page
+- The contact page conatins a form that will allow the user to send an email to the admin team. It is paired with both a confirmation email and a website pop up to inform the user that their message has been submitted. 
 
-```
-pkill uptime.sh
-rm .vscode/uptime.sh
-```
+<img src="static/documentation/features/contact_html.jpg">
 
-**Anything more?**
+### User Feedback Messages
+- Feedback messages are present throughout the site to confirm to a user that they were successful in signing in, signing out, placing an order, updating an order, updating their profile, etc. 
 
-Yes! We'd strongly encourage you to look at the source code of the `uptime.sh` file so that you know what it's doing. As future software developers, it will be great practice to see how these shell scripts work.
+### Future Features
+1.  
 
----
 
-Happy coding!
+## Agile Methodology
+
+This project was developed using the AGILE Methodology, a [Project Kanban Board](https://github.com/users/MichelleDuda/projects/6), and [Project Milestones](https://github.com/MichelleDuda/wangers-pp5/milestones). This approach helped to create a systematic approach to building my site while allowing for flexibility for priority based decision making. 
+
+In order to effectively manage the development, I utilized GitHub Projects, and was able to break tasks down into user stories for better manageability. As the issues were addressed they were moved from the to-do list to the in progress section, where commit messages were tied to them before they were closed out after the features were tested and deployed. 
+
+
+
+## Technologies Used
+
+
+### Languages
+- HTML
+- CSS
+- Javascript
+- Python
+
+### Frameworks, Libraries & Programs Used
+- [Heruko](https://www.heroku.com/) was used to deploy this project.
+- [Visual Studio](https://code.visualstudio.com/) was the local IDE utilized for development. 
+- [GitHub](https://github.com/) was used for version control and code hosting.
+- [Google Fonts](https://fonts.google.com) was used for the fonts: Oswald and Lato.
+- [Font Awesome](https://fontawesome.com/) was used for various icons in the footer and headings of the pages. 
+- [Balsamiq](https://balsamiq.com/) was used to create the wireframes.
+- [Lucid Chart](https://www.lucidchart.com/) was used to creat the Entity Relationship Diagram
+- [CI Python Linter](https://pep8ci.herokuapp.com/)
+- [CSS-Valitador](#https://jigsaw.w3.org/css-validator/) was used for CSS validation
+- [W3C](https://validator.w3.org/) was used for HTML validation
+- PostgreSQL
+- [Django](https://www.djangoproject.com/) was used as the backend framework.
+- Bootstrap
+- Django AllAuth
+- OAuthLib
+
+## Testing
+For detailed testing results, refer to the [Testing Documentation](TESTING.md)
+
+## Deployment
+
+### PostgreSQL Setup
+1. Create a New Database Instance
+2. Retrieve Database URL from your account dashboard.
+3. Store the Database URL in env.py file as follows:
+        import os
+        os.environ["DATABASE_URL"] = "<your_postgres_connection_url>"
+4. Ensure your env.py file is in gitignore
+5. Add DATABASE_URL to Heroku Config Vars by navigating to Settings>Reveal Config Vars and adding:  
+    - Key: `DATABASE_URL`  
+    - Value: `<your_postgres_connection_url>`  
+
+### How This Site Was Deployed
+This site was deployed via Heroku.
+1. Log into Heroku (https://www.heroku.com).
+2. Click on Create 'New App' button.
+3. Name the app & choose your region. Click 'Create App' button.
+4. Go to the Settings Tab.
+5. In the Config Vars section, click 'Reveal Config Vars' button.
+  - Enter DATABASE_URL in the key field and enter the actual URL in the value field. Then click 'Add' button.
+  - Enter SECRET_KEY in the key field and enter the actual secret key in the value field. Then click 'Add' button.
+  - ENTER USE_AWS in the key field and enter True in the value field. Then click 'Add' button.
+  - Repeat for all variables in the env.py file.
+6. Go to the Deploy Tab.
+7. Select GitHub in the Deployment Method section.
+8. Confirm to connect to GitHub.
+9. Search for repository name and click Connect.
+10. Make sure branch is set to main and click 'Deploy Branch' button in Manual Deploy section. .
+
+### How to Clone the Repository
+
+To Clone this repository:
+1. Navigate to [https://github.com/MichelleDuda/wangers-pp5](https://github.com/MichelleDuda/wangers-pp5).
+2. Click on the "<> Code" button.
+3. Copy the URL for the repository using HTTPS, SSH, or GitHub CLI. 
+4. Open Git Bash.
+5. Change the working directory to the location you want to clone the directory to. 
+6. Type git clone and paste the URL that was copied earlier. 
+7. Press Enter to begin the clone process. 
+
+
+
+## Credits
+
+### Photos
+1. [hero.webp](https://www.pexels.com/photo/salmon-dish-with-vegetables-1516415/) by Valeria Boltneva from Pexels. 
+
+
+
+### Code
+
+1. [TabletoMarkdown.com](https://tabletomarkdown.com/convert-spreadsheet-to-markdown/) was used to convert my additional manual testing table from an excel spreadsheet to markdown.
+2. [Djano Documentation](https://docs.djangoproject.com/en/5.1/intro/) was used extensively to create various componenets of this project. 
+3. [Bootstrap Documentation](https://getbootstrap.com/docs/5.0/getting-started/introduction/) was used extensively to create various componenets of this project. 
