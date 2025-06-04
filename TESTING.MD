@@ -28,7 +28,15 @@ The following files passed through the [CSS Validator](https://jigsaw.w3.org/css
 ### Javascript Validation
 
 - [Javascript Validator](https://jshint.com)
-  - Code from script.js passed through JSHint site with no errors. The following Metrics were logged: There are 9 functions in this file. Function with the largest signature take 1 arguments, while the median is 0. Largest function has 7 statements in it, while the median is 2. The most complex function has a cyclomatic complexity value of 2 while the median is 1.
+ - Code from checkout_toggle.js passed through JSHint site with no errors. The following Metrics were logged: There are 3 functions in this file. Function with the largest signature take 1 arguments, while the median is 0. Largest function has 7 statements in it, while the median is 7. The most complex function has a cyclomatic complexity value of 3 while the median is 1.
+
+ - Code from delivery_method_change.js passed through JSHint site with no errors. The following Metrics were logged: There are 5 functions in this file. Function with the largest signature take 1 arguments, while the median is 1. Largest function has 22 statements in it, while the median is 2. The most complex function has a cyclomatic complexity value of 6 while the median is 1.
+
+ - Code from delivery_method.js passed through JSHint site with no errors. The following Metrics were logged: There are 3 functions in this file. Function with the largest signature take 1 arguments, while the median is 0. Largest function has 11 statements in it, while the median is 2. The most complex function has a cyclomatic complexity value of 3 while the median is 1.
+
+ - Code from stripe_elements.js passed through JSHint site with no errors. The following Metrics were logged: There are 8 functions in this file. Function with the largest signature take 1 arguments, while the median is 0.5. Largest function has 10 statements in it, while the median is 2.5. The most complex function has a cyclomatic complexity value of 3 while the median is 1
+
+ - Code from cart_sound.js passed through JSHint site with no errors. The following Metrics were logged: There are 2 functions in this file. Function with the largest signature take 0 arguments, while the median is 0. Largest function has 4 statements in it, while the median is 2.5. The most complex function has a cyclomatic complexity value of 3 while the median is 2.
 
 
 ### Python Pep8 Linter
