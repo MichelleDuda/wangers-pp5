@@ -93,7 +93,7 @@
                                     <p class="lead mb-0 text-left font-weight-bold">${{ menu_item.price }}</p>
 
                                     {% if request.user.is_superuser %}
-                                        <small class="ml-3">
+                                        <small>
                                             <a href="{% url 'edit_menu_item' menu_item.id %}">Edit</a> | 
                                             <a class="text-danger" href="{% url 'delete_menu_item' menu_item.id %}">Delete</a>
                                         </small>
