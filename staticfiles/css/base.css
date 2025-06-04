@@ -17,7 +17,7 @@ body {
 }
 
 main {
-    margin-top: 144px;
+    margin-top: 328px;
     overflow: hidden;
 }
 
@@ -33,7 +33,7 @@ main {
 
 .message-container {
     position: fixed;
-    top: 72px;
+    top: 130px;
     right: 15px;
     z-index: 99999999999;
 }
@@ -214,8 +214,8 @@ footer p {
     height: 450px;
 }
 
-#hero-cover-text, .error-cover-text {
-    background: #00000091;
+#hero-cover-text {
+    background: #00000048;
     color: white;
     font-size: 125%; 
     text-align: center;
@@ -238,8 +238,34 @@ footer p {
     font-size: 3em;
 }
 
+.order_now_button {
+    background: linear-gradient(to right, #f59e13, #d47f00);
+    color: black;
+    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+    padding: 12px 30px;
+    font-size: 1.2rem;
+    font-weight: 600;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease;
+}
+
+.order_now_button:hover {
+    background: linear-gradient(to right, #e68d00, #b76900);
+    transform: scale(1.05);
+    box-shadow: 0 12px 20px rgba(0, 0, 0, 0.3);
+}
+
+.order_now_button:active {
+    transform: scale(0.97);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+
 #newsletter-section {
-    background-color: #F59E13;
+  background: radial-gradient(circle at top left, #F59E13, #fbbf24, #fff8e1);
 }
 
 .subscribe_button {
@@ -350,6 +376,27 @@ footer p {
     height: 450px;
 }
 
+.error-cover-text {
+    background: #00000091;
+    color: white;
+    font-size: 125%; 
+    text-align: center;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: flex; 
+    flex-direction: column;
+    align-items: center; 
+    justify-content: center; 
+    padding: 40px 10px 25px;
+    text-shadow:
+        -1px -1px 0 #000,
+         1px -1px 0 #000,
+        -1px  1px 0 #000,
+         1px  1px 0 #000;
+}
+
+
 /* ------------------------------------------------------------------------ Account Templates Styles */
 
 .form-block {
@@ -452,8 +499,6 @@ footer p {
 }
 
 
-/* Styling for error404-cover-text is the same as hero-cover-text */
-
 /* ----------------------------------------------------------------------------------------- Media Queries */
 
 /* Slightly larger container on xl screens */
@@ -484,6 +529,7 @@ footer p {
     
     main {
     margin-top: 188px;
+    padding-top: 30px;
     }
 }
 @media (min-width: 768px) {
