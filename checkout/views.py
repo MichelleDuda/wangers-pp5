@@ -8,7 +8,7 @@ from .forms import OrderForm
 from django.conf import settings
 from django.http import JsonResponse
 from cart.contexts import cart_contents
-from menu.models import MenuItem, Sauce
+from menu.models import MenuItem, Sauce, AddOn
 from .models import Order, OrderLineItem
 from profiles.forms import UserProfileForm
 from profiles.models import UserProfile
@@ -157,29 +157,15 @@ def checkout(request):
 
             for key, item_data in cart.items():
                 parts = key.split('_')
-                if len(parts) == 2:
-                    item_id, sauce_id = parts
-                    sauce_id = int(sauce_id) if sauce_id != 'None' else None
-                else:
-                    item_id = parts[0]
-                    sauce_id = None
-                item_id = int(item_id)
+                item_id = int(parts[0])
+                sauce_id = int(parts[1]) if len(parts) > 1 and parts[1] != 'None' else None
+                add_on_ids = parts[2:] if len(parts) > 2 else []
 
                 try:
                     menu_item = MenuItem.objects.get(pk=item_id)
-                    sauce = None
-                    if sauce_id:
-                        try:
-                            sauce = Sauce.objects.get(pk=sauce_id)
-                        except Sauce.DoesNotExist:
-                            messages.error(
-                                request,
-                                "Missing sauce. Please review your cart."
-                            )
-                            order.delete()
-                            return redirect(reverse('view_cart'))
-
+                    sauce = Sauce.objects.get(pk=sauce_id) if sauce_id else None
                     quantity = item_data.get('quantity', 1)
+                    add_on_ids = [int(aid) for aid in parts[2:] if aid.isdigit()] if len(parts) > 2 else []
 
                     order_line_item = OrderLineItem(
                         order=order,
@@ -188,6 +174,11 @@ def checkout(request):
                         sauce=sauce,
                     )
                     order_line_item.save()
+
+                    if add_on_ids:
+                        add_ons = AddOn.objects.filter(id__in=add_on_ids)
+                        order_line_item.addons.set(add_ons)
+                        order_line_item.save()
 
                 except MenuItem.DoesNotExist:
                     messages.error(
@@ -200,6 +191,11 @@ def checkout(request):
             order.stripe_pid = pid
 
             request.session['save_info'] = 'save-info' in request.POST
+
+            # Reset Delivery Method for next session
+            request.session['delivery_method'] = 'delivery'
+            request.session.modified = True
+
             return redirect(
                 reverse('checkout_success', args=[order.order_number])
             )

@@ -1,7 +1,7 @@
 from decimal import Decimal
 from django.conf import settings
 from django.shortcuts import get_object_or_404
-from menu.models import MenuItem, Sauce
+from menu.models import MenuItem, Sauce, AddOn
 
 
 def cart_contents(request):
@@ -12,22 +12,38 @@ def cart_contents(request):
 
     for key, item_data in cart.items():
         # Split item_id and sauce_id from the key if a sauce_id exists
-        parts = key.split('_')
-        if len(parts) == 2:
-            item_id, sauce_id = parts
-            sauce_id = int(sauce_id) if sauce_id != 'None' else None
-        else:
-            item_id = parts[0]
-            sauce_id = None
-        item_id = int(item_id)
+        parts = key.strip('_').split('_')
+
+        # Parse item_id
+        item_id = int(parts[0])
+
+        # Parse sauce_id if exists
+        sauce_id = None
+        if len(parts) > 1 and parts[1] not in ('None', ''):
+            try:
+                sauce_id = int(parts[1])
+            except ValueError:
+                sauce_id = None
 
         # Retrieve the menu item and sauce objects
         menu_item = get_object_or_404(MenuItem, pk=item_id)
         sauce = get_object_or_404(Sauce, pk=sauce_id) if sauce_id else None
 
-        # Calculate the line total
+        print(f"Cart key: {key}, item_id: {item_id}, sauce_id: {sauce_id}")
+        print(f"Sauce object: {sauce}")
+
+
         quantity = item_data.get('quantity', 1)
-        line_total = quantity * menu_item.price
+
+        # Calculate Add On Portion
+        add_on_ids = item_data.get('add_ons', [])
+        add_on_ids = [int(a) for a in add_on_ids] if add_on_ids else []
+        add_ons = AddOn.objects.filter(id__in=add_on_ids)
+        add_ons_total = sum(add_on.price for add_on in add_ons)
+
+        # Calculate the line total
+        line_total = ((quantity * menu_item.price) + add_ons_total)
+        print(line_total)
         total += line_total
         product_count += quantity
 
@@ -37,10 +53,14 @@ def cart_contents(request):
             'quantity': quantity,
             'menu_item': menu_item,
             'sauce': sauce,
+            'add_ons': add_ons,
             'line_total': line_total,
         })
 
-    delivery_method = request.session.get('delivery_method', 'delivery')
+    if 'delivery_method' not in request.session:
+        request.session['delivery_method'] = 'delivery'
+    delivery_method = request.session.get('delivery_method')
+    print("Delivery method in session:", request.session.get('delivery_method'))
 
     if delivery_method == 'pickup':
         delivery = Decimal('0.00')

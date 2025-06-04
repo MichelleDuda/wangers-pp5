@@ -142,7 +142,7 @@ class OrderLineItem(models.Model):
         if self.pk:
             addons_total = sum(
                 addon.price for addon in self.addons.all()
-            ) * self.quantity
+            )
 
         self.lineitem_total = base_price + addons_total
         super().save(*args, **kwargs)

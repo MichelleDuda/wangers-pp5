@@ -45,10 +45,15 @@
                         {% if item.sauce %}
                             <p class="my-0 small">Sauce: {{ item.sauce.friendly_name }}</p>
                         {% endif %}
+                        {% if item.add_ons %}
+                            {% for add_on in item.add_ons %}
+                                <p class="my-0 small">Add-on: {{ add_on.friendly_name }}</p>
+                            {% endfor %}
+                        {% endif %}
                         <p class="my-0 small text-muted">Qty: {{ item.quantity }}</p>
                     </div>
                     <div class="col-3 text-right">
-                        <p class="my-0 small text-muted">${{ item.menu_item.price | calc_subtotal:item.quantity }}</p>
+                        <p class="my-0 small text-muted">${{ item.line_total|floatformat:2 }}</p>
                     </div>
                 </div>
             {% endfor %}
@@ -100,7 +105,7 @@
                         <div class="form-check form-check-inline float-right mr-0">
 							{% if user.is_authenticated %}
 								<label class="form-check-label" for="id-save-info">Save this delivery information to my profile</label>
-                                <input class="form-check-input ml-2 mr-0" type="checkbox" id="id-save-info" name="save-info" checked>
+                                <input class="form-check-input ml-2 mr-0" type="checkbox" id="id-save-info" name="save-info">
 							{% else %}
 								<label class="form-check-label" for="id-save-info">
                                     <a class="text-info" href="{% url 'account_signup' %}">Create an account</a> or 

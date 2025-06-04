@@ -46,6 +46,14 @@
                                         {% if item.sauce %}
                                             <p class="my-0 text-muted">Sauce: {{ item.sauce.friendly_name }}</p>
                                         {% endif %}
+
+                                        {% if item.add_ons %}
+                                            <p class="my-0 text-muted"><strong>Add-ons:</strong>
+                                                {% for add_on in item.add_ons %}
+                                                    {{ add_on.friendly_name }} (+${{ add_on.price }}){% if not forloop.last %}, {% endif %}
+                                                {% endfor %}
+                                            </p>
+                                        {% endif %}
                                     </td>
                                     <td class="py-3">
                                         <p class="my-0">${{ item.menu_item.price }}</p>
@@ -73,12 +81,17 @@
                                                     </div>
                                                 </div>
                                             </div>
+                                            {% if item.add_ons %}
+                                                {% for add_on in item.add_ons %}
+                                                    <input type="hidden" name="add_ons" value="{{ add_on.id }}">
+                                                {% endfor %}
+                                            {% endif %}
                                         </form>
                                         <a class="update-link text-info"><small>Update</small></a>
                                         <a class="remove-item text-danger float-right" id="remove_{{ item.key }}"><small>Remove</small></a>
                                     </td>
                                     <td class="py-3">
-                                        <p class="my-0">${{ item.menu_item.price | calc_subtotal:item.quantity }}</p>
+                                        <p class="my-0">${{ item.line_total|floatformat:2 }}</p>
                                     </td>
                                 </tr>
                             {% endfor %}

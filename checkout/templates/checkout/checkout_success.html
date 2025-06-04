@@ -163,6 +163,11 @@
                     {% if item.sauce %}
                         <p class="small mb-0">Sauce: {{ item.sauce.friendly_name }}</p>
                     {% endif %}
+                    {% if item.addons %}
+                        {% for add_on in item.addons.all %}
+                            <p class="my-0 small">Add-on: {{ add_on.friendly_name }} + ${{ add_on.price }}</p>
+                        {% endfor %}
+                    {% endif %}
                 </div>
                 <div class="col-12 col-md-8 text-md-right">
                     <p class="small mb-0">{{ item.quantity }} @ ${{ item.menu_item.price }} each</p>

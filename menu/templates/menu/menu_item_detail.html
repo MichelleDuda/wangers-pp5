@@ -47,7 +47,7 @@
 
                         <!-- Sauce Selection -->
                         {% if sauces %}
-                        <div class="form-group">
+                        <div class="form-group mt-3 px-2">
                             <label for="sauce">Choose a Sauce:</label>
                             <select name="sauce" id="sauce" class="form-control">
                                 {% for sauce in sauces %}
@@ -56,6 +56,22 @@
                             </select>
                         </div>
                         {% endif %}
+
+                        <!-- Add on Selection -->
+                        {% if addons %}
+                        <div class="form-group mt-3 px-2">
+                            <label>Add-ons:</label><br>
+                            {% for addon in addons %}
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="add_ons" value="{{ addon.id }}" id="addon{{ addon.id }}">
+                                    <label class="form-check-label" for="addon{{ addon.id }}">
+                                        {{ addon.name }} (+${{ addon.price }})
+                                    </label>
+                                </div>
+                            {% endfor %}
+                        </div>
+                        {% endif %}
+
 
                         <!-- Quanitity Selection -->
                         <div class="col-12">

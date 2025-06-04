@@ -21,10 +21,15 @@ def add_to_cart(request, item_id):
     menu_item = get_object_or_404(MenuItem, pk=item_id)
     quantity = int(request.POST.get('quantity'))
     sauce_id = request.POST.get('sauce', None)
+    add_on_ids = request.POST.getlist('add_ons')
     redirect_url = request.POST.get('redirect_url')
     cart = request.session.get('cart', {})
 
-    key = f"{item_id}_{sauce_id}" if sauce_id else str(item_id)
+    # Sort add_on_ids so order is consistent for key
+    add_on_ids_sorted = sorted(add_on_ids)
+    add_ons_key_part = "_".join(add_on_ids_sorted) if add_on_ids_sorted else ""
+
+    key = f"{item_id}_{sauce_id}_{add_ons_key_part}" if sauce_id or add_ons_key_part else str(item_id)
 
     if key in cart:
         cart[key]['quantity'] += quantity
@@ -34,6 +39,7 @@ def add_to_cart(request, item_id):
             'menu_item_id': item_id,
             'quantity': quantity,
             'sauce_id': sauce_id,
+            'add_ons': add_on_ids_sorted,
         }
         messages.success(request, f'Added {menu_item.name} to your cart')
 
@@ -48,10 +54,14 @@ def adjust_cart(request, item_id):
     menu_item = get_object_or_404(MenuItem, pk=item_id)
     quantity = int(request.POST.get('quantity'))
     sauce_id = request.POST.get('sauce', None)
+    add_on_ids = request.POST.getlist('add_ons')
     redirect_url = request.POST.get('redirect_url')
     cart = request.session.get('cart', {})
 
-    key = f"{item_id}_{sauce_id}" if sauce_id else str(item_id)
+    add_on_ids_sorted = sorted(add_on_ids)
+    add_ons_key_part = "_".join(add_on_ids_sorted) if add_on_ids_sorted else ""
+
+    key = f"{item_id}_{sauce_id}_{add_ons_key_part}" if sauce_id or add_ons_key_part else str(item_id)
 
     if key in cart:
         if quantity > 0:
@@ -59,11 +69,9 @@ def adjust_cart(request, item_id):
             messages.success(request, f'Updated {menu_item.name} quantity')
         else:
             del cart[key]
-            if not cart[key]:
-                cart.pop(key)
 
     request.session['cart'] = cart
-    return redirect(reverse('cart'))
+    return redirect(redirect_url)
 
 
 def remove_from_cart(request, item_id):
@@ -76,7 +84,7 @@ def remove_from_cart(request, item_id):
     try:
         menu_item = get_object_or_404(MenuItem, pk=menu_item_id)
         cart = request.session.get('cart', {})
-        key = f"{menu_item_id}_{sauce_id}" if sauce_id else str(menu_item_id)
+        key = item_id
 
         if key in cart:
             del cart[key]
