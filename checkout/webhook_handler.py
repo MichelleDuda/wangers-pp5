@@ -103,6 +103,7 @@ class StripeWH_Handler:
 
         if order:
             # Order already exists, send confirmation email and exit
+            print(f"Order already exists in webhook: {order.order_number}")
             self._send_confirmation_email(order)
             return HttpResponse(
                 content=(
@@ -114,6 +115,7 @@ class StripeWH_Handler:
 
         # Create the order if not found
         try:
+            print(f"Creating order in webhook for PID: {pid}")
             order_data = {
                 "full_name": shipping_details.name,
                 "user_profile": profile,
@@ -154,7 +156,7 @@ class StripeWH_Handler:
                 menu_item = MenuItem.objects.get(pk=item_id)
                 sauce = Sauce.objects.get(pk=sauce_id) if sauce_id else None
 
-                OrderLineItem.objects.create(
+                order_line_item = OrderLineItem.objects.create(
                     order=order,
                     menu_item=menu_item,
                     quantity=quantity,
@@ -177,6 +179,9 @@ class StripeWH_Handler:
 
         # Send confirmation email after successful order creation
         self._send_confirmation_email(order)
+        print(f"sending confirmation email: {pid}")
+        
+
         return HttpResponse(
             content=(
                 f'Webhook received: {event["type"]} | SUCCESS: '

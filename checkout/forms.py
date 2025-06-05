@@ -19,7 +19,8 @@ class OrderForm(forms.ModelForm):
         model = Order
         fields = ('full_name', 'email', 'phone_number',
                   'street_address1', 'street_address2',
-                  'town_or_city', 'state', 'postcode',)
+                  'town_or_city', 'state', 'postcode',
+                  'delivery_method',)
 
     def __init__(self, *args, **kwargs):
         """

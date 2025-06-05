@@ -29,4 +29,35 @@ document.addEventListener('DOMContentLoaded', function() {
     deliveryRadio.addEventListener('change', toggleAddressFields);
 
     toggleAddressFields();
+
+    const checkoutForm = document.getElementById('checkout-form');
+
+    if (checkoutForm) {
+        checkoutForm.addEventListener('submit', function (e) {
+            if (deliveryRadio.checked) {
+                const requiredFields = [
+                    'id_postcode',
+                    'id_town_or_city',
+                    'id_street_address1'
+                ];
+
+                let valid = true;
+
+                requiredFields.forEach(id => {
+                    const field = document.getElementById(id);
+                    if (field && !field.value.trim()) {
+                        field.classList.add('input-error');
+                        valid = false;
+                    } else if (field) {
+                        field.classList.remove('input-error');
+                    }
+                });
+
+                if (!valid) {
+                    e.preventDefault();
+                    alert('Please fill in all required delivery address fields.');
+                }
+            }
+        });
+    }
 });

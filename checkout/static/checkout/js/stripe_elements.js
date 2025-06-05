@@ -65,12 +65,35 @@ var form = document.getElementById('payment-form');
 
 form.addEventListener('submit', function(ev) {
     ev.preventDefault();
+
+    const deliveryMethod = $('input[name="delivery_method"]:checked').val();
+    const isDelivery = deliveryMethod === 'delivery';
+    const requiredFields = ['#id_street_address1', '#id_postcode', '#id_town_or_city'];
+    let missing = [];
+
+    if (isDelivery) {
+        requiredFields.forEach(selector => {
+            const field = $(selector);
+            if (!field.val().trim()) {
+                field.addClass('input-error');
+                missing.push(selector);
+            } else {
+                field.removeClass('input-error');
+            }
+        });
+
+        if (missing.length > 0) {
+            alert("Please fill in all required delivery address fields.");
+            return;
+        }
+    }
+    
     card.update({ 'disabled': true});
     $('#submit-button').attr('disabled', true);
     $('#payment-form').fadeOut(100);
     $('#loading-overlay').css('display', 'flex').hide().fadeIn(100);
 
-    var saveInfo = Boolean($('#id-save-info').attr('checked'));
+    var saveInfo = $('#id-save-info').is(':checked');
     var csrfToken = $('input[name="csrfmiddlewaretoken"]').val();
     var postData = {
         'csrfmiddlewaretoken': csrfToken,

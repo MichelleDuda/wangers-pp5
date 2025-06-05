@@ -154,6 +154,7 @@ def checkout(request):
                 )
 
             order.save()
+            print(f"Order created in checkout view: {order.order_number}")
 
             for key, item_data in cart.items():
                 parts = key.split('_')
@@ -219,6 +220,11 @@ def checkout(request):
                 request,
                 'There was an error with your form. Please try again.'
             )
+            return render(request, 'checkout/checkout.html', {
+                'order_form': order_form,
+                'stripe_public_key': stripe_public_key,
+                'order': order,
+            })
 
     else:
         cart = request.session.get('cart', {})
