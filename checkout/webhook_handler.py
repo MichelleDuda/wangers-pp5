@@ -57,8 +57,6 @@ class StripeWH_Handler:
 
         delivery_method = intent.metadata.get('delivery_method', 'pickup')
 
-        print(f"Delivery Method Chosen: {delivery_method}")
-
         # Normalize empty strings in shipping address to None
         if shipping_details and shipping_details.address:
             for field, value in shipping_details.address.items():
@@ -103,7 +101,6 @@ class StripeWH_Handler:
 
         if order:
             # Order already exists, send confirmation email and exit
-            print(f"Order already exists in webhook: {order.order_number}")
             self._send_confirmation_email(order)
             return HttpResponse(
                 content=(
@@ -115,7 +112,6 @@ class StripeWH_Handler:
 
         # Create the order if not found
         try:
-            print(f"Creating order in webhook for PID: {pid}")
             order_data = {
                 "full_name": shipping_details.name,
                 "user_profile": profile,
@@ -179,8 +175,6 @@ class StripeWH_Handler:
 
         # Send confirmation email after successful order creation
         self._send_confirmation_email(order)
-        print(f"sending confirmation email: {pid}")
-        
 
         return HttpResponse(
             content=(

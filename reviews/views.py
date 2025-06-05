@@ -60,7 +60,6 @@ def create_review(request, menu_item_id=None):
     if request.method == 'POST':
         form = ReviewForm(request.POST)
         if form.is_valid():
-            print("Valid Form")
             review = form.save(commit=False)
             review.menu_item = (
                 menu_item if menu_item else form.cleaned_data['menu_item']
@@ -133,20 +132,25 @@ def delete_review(request, review_id):
             "You are not allowed to delete this review."
         )
 
-    menu_item_id = review.menu_item.id
     review.delete()
     return redirect('review_list')
 
 
 def toggle_like(request, review_id):
     ''' A view to toggle the like feature for a review'''
-    review = get_object_or_404(Review, id=review_id)
-    like, created = Like.objects.get_or_create(
-        user=request.user,
-        review=review
-    )
 
-    if not created:
-        like.delete()
+    if request.user.is_authenticated:
+        review = get_object_or_404(Review, id=review_id)
+        like, created = Like.objects.get_or_create(
+            user=request.user,
+            review=review
+        )
 
+        if not created:
+            like.delete()
+    else:
+        messages.error(
+            request,
+            "You must be logged in to like a review."
+        )
     return redirect('review_list')

@@ -29,9 +29,6 @@ def cart_contents(request):
         menu_item = get_object_or_404(MenuItem, pk=item_id)
         sauce = get_object_or_404(Sauce, pk=sauce_id) if sauce_id else None
 
-        print(f"Cart key: {key}, item_id: {item_id}, sauce_id: {sauce_id}")
-        print(f"Sauce object: {sauce}")
-
         quantity = item_data.get('quantity', 1)
 
         # Calculate Add On Portion
@@ -42,7 +39,6 @@ def cart_contents(request):
 
         # Calculate the line total
         line_total = ((quantity * menu_item.price) + add_ons_total)
-        print(line_total)
         total += line_total
         product_count += quantity
 

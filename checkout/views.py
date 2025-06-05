@@ -18,8 +18,6 @@ import json
 
 @require_POST
 def cache_checkout_data(request):
-    print("Received POST data:", request.POST)
-
     try:
         client_secret = request.POST.get('client_secret', '')
         if not client_secret:
@@ -154,7 +152,6 @@ def checkout(request):
                 )
 
             order.save()
-            print(f"Order created in checkout view: {order.order_number}")
 
             for key, item_data in cart.items():
                 parts = key.split('_')
