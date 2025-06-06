@@ -9,6 +9,7 @@ class ContactMessageAdmin(admin.ModelAdmin):
     search_fields = ('name', 'email', 'subject', 'message')
     ordering = ('-submitted_at',)
 
+
 @admin.register(NewsletterSignup)
 class NewsletterSignupAdmin(admin.ModelAdmin):
     list_display = ('email', 'date_joined')
