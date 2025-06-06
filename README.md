@@ -25,6 +25,7 @@ Link to Live Site: [Wangers Website](https://wangers-d543b0386356.herokuapp.com/
     * [Profile Page](#profile-page)
     * [User Authentication Pages](#user-authentication-pages)
     * [Future Features](#future-features)
+* [Marketing & SEO](#marketing--seo)
 * [Agile Methodology](#agile-methodology)
 * [Technologies Used](#technologies-used)
     * [Languages](#languages)
@@ -95,31 +96,37 @@ The mouthwatering image not only sets the tone for the overall experience but al
 The  wireframes were created in Balsamiq to outline the basic structure of the site. These wireframes were kept simple, reflecting a clean professional minimalist design approach.
 
 <details><summary>Home Page</summary>
-<img src="static/documentation/wireframes/index.html.png">
+<img src="media/readme/wireframes/home.png">
+<img src="media/readme/wireframes/home_tablet.png">
+<img src="media/readme/wireframes/home_mobile.png">
 </details>
 <details><summary>Menu Page</summary>
-<img src="static/documentation/wireframes/">
+<img src="media/readme/wireframes/menu.png">
+<img src="media/readme/wireframes/menu_tablet.png">
 </details>
 <details><summary>Menu Detail Page</summary>
-<img src="static/documentation/wireframes/">
+<img src="media/readme/wireframes/menu_detail.png">
+<img src="media/readme/wireframes/menu_detail_tablet.png">
 </details>
 <details><summary>Review List Page</summary>
-<img src="static/documentation/wireframes/">
+<img src="media/readme/wireframes/reviews.png">
+<img src="media/readme/wireframes/reviews_tablet.png">
 </details>
 <details><summary>Review Form Page</summary>
-<img src="static/documentation/wireframes/">
+<img src="media/readme/wireframes/review_form.png">
+<img src="media/readme/wireframes/review_form_tablet.png">
 </details>
 <details><summary>Contact Page</summary>
-<img src="static/documentation/wireframes/">
+<img src="media/readme/wireframes/contact.png">
+<img src="media/readme/wireframes/contact_tablet.png">
 </details>
-<details><summary>Registration Page </summary>
-<img src="static/documentation/wireframes/">
-</details>
-<details><summary>Log In Page </summary>
-<img src="static/documentation/wireframes/">
+<details><summary>Profile Page</summary>
+<img src="media/readme/wireframes/my_profile.png">
+<img src="media/readme/wireframes/my_profile_tablet.png">
 </details>
 <details><summary>Admin Menu Management Page </summary>
-<img src="static/documentation/wireframes/">
+<img src="media/readme/wireframes/menu_management.png">
+<img src="media/readme/wireframes/menu_management_tablet.png">
 </details>
 
 
@@ -206,6 +213,10 @@ This relational structure ensures data integrity and allows for efficient retrie
 
 ### Future Features
 1.  
+
+
+## Marketing & SEO
+For detailed Mareting & SEO research, refer to the [Marketing Documentation](MARKETING.md)
 
 
 ## Agile Methodology

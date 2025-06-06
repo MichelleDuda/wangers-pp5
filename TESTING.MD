@@ -1,4 +1,4 @@
-# DG Catering Student Meal Plan Portal Testing
+# Wangers Testing
 
 * [Validator Testing](#validator-testing)
     * [HTML Validation](#html-validation)
@@ -16,14 +16,30 @@
 
 ### HTML Validation
 The following files all passed through the [HTML Validator](https://validator.w3.org/nu/#textarea) with no errors:
-<img src="static/documentation/testing/validator_images/html_validator.jpg">
+<img src="media/testing/html/html_validator.jpg">
+
 - index.html [Full Results](static/documentation/testing/validator_results/html_home.pdf)
+- contact.html
+- cart.html
+- checkout.html
+- checkout_success.html
+- profile.html
+- review_list.html
+- review_form.html
+- login.html
+- signup.html
+- logout.html 
+
+
+
 
 ### CSS Validation
 The following files passed through the [CSS Validator](https://jigsaw.w3.org/css-validator/#validate_by_input) with no errors:
-<img src="static/documentation/testing/validator_images/css_validator2.jpg">
+<img src="static/documentation/testing/css/css_validator2.jpg">
 
 - base.css [Full Results](static/documentation/testing/validator_results/css_validator.pdf)
+- checkout.css
+- profile.css
 
 ### Javascript Validation
 
