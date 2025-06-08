@@ -163,7 +163,6 @@ class StripeWH_Handler:
                     add_ons = AddOn.objects.filter(id__in=add_on_ids)
                     order_line_item.addons.set(add_ons)
                     order_line_item.save()
-                    
 
         except Exception as e:
             # If error occurs, delete incomplete order to avoid corrupt data

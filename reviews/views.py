@@ -150,7 +150,7 @@ def delete_review(request, review_id):
 
     # Confirm action prior to deletion
     return render(request, 'confirm_delete.html', {
-        'item_name': f"your review from {review.created_at.strftime('%B %d, %Y')}",
+        'item_name': f"Review from {review.created_at.strftime('%B %d, %Y')}",
         'delete_url': reverse('delete_review', args=[review_id]),
         'cancel_url': referer,
     })

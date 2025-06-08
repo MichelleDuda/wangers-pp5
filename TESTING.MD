@@ -18,7 +18,7 @@
 The following files all passed through the [HTML Validator](https://validator.w3.org/nu/#textarea) with no errors:
 <img src="media/testing/html/html_validator.jpg">
 
-- index.html [Full Results](static/documentation/testing/validator_results/html_home.pdf)
+- index.html [Full Results](media/readme/validator/html/home.pdf)
 - contact.html
 - cart.html
 - checkout.html
@@ -37,9 +37,9 @@ The following files all passed through the [HTML Validator](https://validator.w3
 The following files passed through the [CSS Validator](https://jigsaw.w3.org/css-validator/#validate_by_input) with no errors:
 <img src="static/documentation/testing/css/css_validator2.jpg">
 
-- base.css [Full Results](static/documentation/testing/validator_results/css_validator.pdf)
-- checkout.css
-- profile.css
+- base.css [Full Results](media/readme/validator/css/base_css.pdf)
+- checkout.css [Full Results](media/readme/validator/css/checkout_css.pdf)
+- profile.css [Full Results](media/readme/validator/css/profile_css.pdf)
 
 ### Javascript Validation
 
@@ -57,8 +57,130 @@ The following files passed through the [CSS Validator](https://jigsaw.w3.org/css
 
 ### Python Pep8 Linter
 The following files all passed through the [Python PEP8 Linter](https://pep8ci.herokuapp.com/) with no errors:
-    <details><summary>urls.py</summary>
-    <img src="static/documentation/testing/validator_images/python/py_urls.jpg"> 
+    <details><summary>Cart App</summary>
+        <details><summary>contexts.py</summary>
+            <img src="media/readme/validator/pep8/cart-contexts.jpg"> 
+        </details>
+        <details><summary>urls.py</summary>
+            <img src="media/readme/validator/pep8/cart-urls.jpg"> 
+        </details> 
+        <details><summary>views.py</summary>
+            <img src="media/readme/validator/pep8/cart-views.jpg"> 
+        </details>
+        <details><summary>cart_tools.py</summary>
+            <img src="media/readme/validator/pep8/cart-cart_tools.jpg"> 
+        </details> 
+    </details>
+    <details><summary>Checkout App</summary>
+        <details><summary>admin.py</summary>
+            <img src="media/readme/validator/pep8/checkout-admin.jpg"> 
+        </details>
+        <details><summary>forms.py</summary>
+            <img src="media/readme/validator/pep8/checkout-forms.jpg"> 
+        </details> 
+        <details><summary>models.py</summary>
+            <img src="media/readme/validator/pep8/checkout-models.jpg"> 
+        </details>
+        <details><summary>urls.py</summary>
+            <img src="media/readme/validator/pep8/checkout-urls.jpg"> 
+        </details> 
+        <details><summary>views.py</summary>
+            <img src="media/readme/validator/pep8/checkout-views.jpg"> 
+        </details>
+        <details><summary>webhook_handler.py</summary>
+            <img src="media/readme/validator/pep8/checkout-webhook_handler.jpg"> 
+        </details>
+        <details><summary>webhooks.py</summary>
+            <img src="media/readme/validator/pep8/checkout-webhook.jpg"> 
+        </details> 
+    </details>
+    <details><summary>Home App</summary>
+        <details><summary>admin.py</summary>
+            <img src="media/readme/validator/pep8/home-admin.jpg"> 
+        </details>
+        <details><summary>forms.py</summary>
+            <img src="media/readme/validator/pep8/home-forms.jpg"> 
+        </details> 
+        <details><summary>models.py</summary>
+            <img src="media/readme/validator/pep8/home-models.jpg"> 
+        </details>
+        <details><summary>urls.py</summary>
+            <img src="media/readme/validator/pep8/home-urls.jpg"> 
+        </details>
+        <details><summary>views.py</summary>
+            <img src="media/readme/validator/pep8/home-views.jpg"> 
+        </details> 
+    </details>
+    <details><summary>Menu App</summary>
+        <details><summary>admin.py</summary>
+            <img src="media/readme/validator/pep8/menu-admin.jpg"> 
+        </details>
+        <details><summary>forms.py</summary>
+            <img src="media/readme/validator/pep8/menu-forms.jpg"> 
+        </details> 
+        <details><summary>models.py</summary>
+            <img src="media/readme/validator/pep8/menu-models.jpg"> 
+        </details>
+        <details><summary>urls.py</summary>
+            <img src="media/readme/validator/pep8/menu-urls.jpg"> 
+        </details>
+        <details><summary>views.py</summary>
+            <img src="media/readme/validator/pep8/menu-views.jpg"> 
+        </details> 
+    </details>
+    <details><summary>Profiles App</summary>
+        <details><summary>admin.py</summary>
+            <img src="media/readme/validator/pep8/profiles-admin.jpg"> 
+        </details>
+        <details><summary>forms.py</summary>
+            <img src="media/readme/validator/pep8/profiles-forms.jpg"> 
+        </details> 
+        <details><summary>models.py</summary>
+            <img src="media/readme/validator/pep8/profiles-models.jpg"> 
+        </details>
+        <details><summary>urls.py</summary>
+            <img src="media/readme/validator/pep8/profiles-urls.jpg"> 
+        </details>
+        <details><summary>views.py</summary>
+            <img src="media/readme/validator/pep8/profiles-views.jpg"> 
+        </details> 
+    </details>
+    <details><summary>Reviews App</summary>
+        <details><summary>admin.py</summary>
+            <img src="media/readme/validator/pep8/reviews-admin.jpg"> 
+        </details>
+        <details><summary>forms.py</summary>
+            <img src="media/readme/validator/pep8/reviews-forms.jpg"> 
+        </details> 
+        <details><summary>models.py</summary>
+            <img src="media/readme/validator/pep8/reviews-models.jpg"> 
+        </details>
+        <details><summary>urls.py</summary>
+            <img src="media/readme/validator/pep8/reviews-urls.jpg"> 
+        </details>
+        <details><summary>views.py</summary>
+            <img src="media/readme/validator/pep8/reviews-views.jpg"> 
+        </details> 
+    </details>
+    <details><summary>Project Level Files</summary>
+        <details><summary>signals.py</summary>
+            <img src="media/readme/validator/pep8/signals.jpg"> 
+        </details>
+        <details><summary>asgi.py</summary>
+            <img src="media/readme/validator/pep8/wangers-asgi.jpg"> 
+        </details> 
+        <details><summary>settings.py</summary>
+            <img src="media/readme/validator/pep8/wangers-settings.jpg"> 
+        </details>
+        <details><summary>urls.py</summary>
+            <img src="media/readme/validator/pep8/wangers-urls.jpg"> 
+        </details>
+        <details><summary>views.py</summary>
+            <img src="media/readme/validator/pep8/wangers-views.jpg"> 
+        </details> 
+        <details><summary>wsgi.py</summary>
+            <img src="media/readme/validator/pep8/wangers-wsgi.jpg"> 
+        </details>
     </details>
 
 The following file passed through with no errors on customized code. However, preloaded built in code had a few errors for line length:
