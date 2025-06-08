@@ -16,26 +16,24 @@
 
 ### HTML Validation
 The following files all passed through the [HTML Validator](https://validator.w3.org/nu/#textarea) with no errors:
-<img src="media/testing/html/html_validator.jpg">
+<img src="media/readme/validator/html/results.jpg">
 
-- index.html [Full Results](media/readme/validator/html/home.pdf)
-- contact.html
-- cart.html
-- checkout.html
-- checkout_success.html
-- profile.html
-- review_list.html
-- review_form.html
-- login.html
-- signup.html
-- logout.html 
+- Home [Full Results](media/readme/validator/html/home.pdf)
+- Contact Page [Full Results](media/readme/validator/html/contact.pdf)
+- Menu [Full Results](media/readme/validator/html/menu.pdf)
+- Menu Detail [Full Results](media/readme/validator/html/menu_detail.pdf)
+- Cart [Full Results](media/readme/validator/html/cart.pdf)
+- Checkout [Full Results](media/readme/validator/html/checkout.pdf)
+- Profile [Full Results](media/readme/validator/html/profile.pdf)
+- Reviews [Full Results](media/readme/validator/html/reviews.pdf) 
+- Menu Management [Full Results](media/readme/validator/html/menu_management.pdf)
 
 
 
 
 ### CSS Validation
 The following files passed through the [CSS Validator](https://jigsaw.w3.org/css-validator/#validate_by_input) with no errors:
-<img src="static/documentation/testing/css/css_validator2.jpg">
+<img src="media/readme/validator/css/results.jpg">
 
 - base.css [Full Results](media/readme/validator/css/base_css.pdf)
 - checkout.css [Full Results](media/readme/validator/css/checkout_css.pdf)
@@ -44,7 +42,7 @@ The following files passed through the [CSS Validator](https://jigsaw.w3.org/css
 ### Javascript Validation
 
 - [Javascript Validator](https://jshint.com)
- - Code from checkout_toggle.js passed through JSHint site with no errors. The following Metrics were logged: There are 3 functions in this file. Function with the largest signature take 1 arguments, while the median is 0. Largest function has 7 statements in it, while the median is 7. The most complex function has a cyclomatic complexity value of 3 while the median is 1.
+ - Code from checkout_toggle.js passed through JSHint site with no errors. There are 5 functions in this file. Function with the largest signature take 1 arguments, while the median is 1. Largest function has 10 statements in it, while the median is 7. The most complex function has a cyclomatic complexity value of 4 while the median is 3.
 
  - Code from delivery_method_change.js passed through JSHint site with no errors. The following Metrics were logged: There are 5 functions in this file. Function with the largest signature take 1 arguments, while the median is 1. Largest function has 22 statements in it, while the median is 2. The most complex function has a cyclomatic complexity value of 6 while the median is 1.
 
@@ -200,6 +198,14 @@ The following file passed through with no errors on customized code. However, pr
 - Lighthouse result for menu_item_detail.html
 
     ![Lighthouse results index](media/readme/lighthouse/menu_detail.jpg)
+
+- Lighthouse result for cart.html
+
+    ![Lighthouse results index](media/readme/lighthouse/cart.jpg)
+
+- Lighthouse result for checkout.html
+
+    ![Lighthouse results index](media/readme/lighthouse/checkout.jpg)
 
 - Lighthouse result for review_list.html
 
