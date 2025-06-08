@@ -1,4 +1,4 @@
-from django.shortcuts import render, get_object_or_404, redirect
+from django.shortcuts import render, get_object_or_404, redirect, reverse
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
@@ -132,8 +132,19 @@ def delete_review(request, review_id):
             "You are not allowed to delete this review."
         )
 
-    review.delete()
-    return redirect('review_list')
+    if request.method == 'POST':
+        review.delete()
+        messages.success(request, "Review deleted.")
+        return redirect('review_list')
+
+    # Store the previous page (fallback to home if not available)
+    referer = request.META.get('HTTP_REFERER', reverse('review_list'))
+
+    return render(request, 'confirm_delete.html', {
+        'item_name': f"your review from {review.created_at.strftime('%B %d, %Y')}",
+        'delete_url': reverse('delete_review', args=[review_id]),
+        'cancel_url': referer,
+    })
 
 
 def toggle_like(request, review_id):

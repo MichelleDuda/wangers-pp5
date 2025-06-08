@@ -160,6 +160,18 @@ def delete_menu_item(request, menuitem_id):
         return redirect(reverse('home'))
 
     menuitem = get_object_or_404(MenuItem, pk=menuitem_id)
-    menuitem.delete()
-    messages.success(request, 'Menu Item deleted!')
-    return redirect(reverse('menu'))
+
+    if request.method == 'POST':
+        menuitem.delete()
+        messages.success(request, 'Menu Item deleted!')
+        return redirect(reverse('menu'))
+
+    # Store the previous page (fallback to home if not available)
+    referer = request.META.get('HTTP_REFERER', reverse('home'))
+
+    return render(request, 'confirm_delete.html', {
+        'menuitem': menuitem,
+        'delete_url': reverse('delete_menu_item', args=[menuitem_id]),
+        'cancel_url': referer,
+        'item_name': menuitem.name,
+    })
