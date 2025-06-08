@@ -1,7 +1,7 @@
 from decimal import Decimal
 from django.contrib import messages
 from django.shortcuts import (
-    render, redirect, get_object_or_404, reverse, HttpResponse
+    render, redirect, get_object_or_404, HttpResponse
 )
 from django.conf import settings
 from django.http import JsonResponse

@@ -10,6 +10,7 @@ from django.http import HttpResponseForbidden
 
 
 class ReviewListView(ListView):
+    ''' Displays All Approved User Reveiews'''
     model = Review
     template_name = 'reviews/review_list.html'
     context_object_name = 'reviews'
@@ -36,7 +37,7 @@ class ReviewListView(ListView):
         user = self.request.user
         reviews = context['reviews']
 
-        # Attach total_likes and has_liked for each review instance
+        # Attach total_likes and has_liked for each review
         for review in reviews:
             review.total_likes = review.total_likes()
             review.has_liked = review.has_liked(user)
@@ -53,6 +54,7 @@ class ReviewListView(ListView):
 
 @login_required
 def create_review(request, menu_item_id=None):
+    '''A view to create a new review'''
     menu_item = None
     if menu_item_id:
         menu_item = get_object_or_404(MenuItem, id=menu_item_id)
@@ -96,7 +98,10 @@ def create_review(request, menu_item_id=None):
 
 @login_required
 def edit_review(request, review_id):
+    ''' A view to handle editing a review '''
     review = get_object_or_404(Review, id=review_id)
+
+    # Ensure user can only edit their own review
     if review.user != request.user:
         return HttpResponseForbidden(
             "You are not allowed to edit this review."
@@ -126,7 +131,10 @@ def edit_review(request, review_id):
 
 @login_required
 def delete_review(request, review_id):
+    '''Handles review deletion'''
     review = get_object_or_404(Review, id=review_id)
+
+    # Ensure a user can only delete their own reviews
     if review.user != request.user:
         return HttpResponseForbidden(
             "You are not allowed to delete this review."
@@ -140,6 +148,7 @@ def delete_review(request, review_id):
     # Store the previous page (fallback to home if not available)
     referer = request.META.get('HTTP_REFERER', reverse('review_list'))
 
+    # Confirm action prior to deletion
     return render(request, 'confirm_delete.html', {
         'item_name': f"your review from {review.created_at.strftime('%B %d, %Y')}",
         'delete_url': reverse('delete_review', args=[review_id]),

@@ -18,6 +18,7 @@ import json
 
 @require_POST
 def cache_checkout_data(request):
+    ''' Caches checkout-related data to the Stripe PaymentIntent '''
     try:
         client_secret = request.POST.get('client_secret', '')
         if not client_secret:
@@ -47,6 +48,7 @@ def cache_checkout_data(request):
 
 
 def create_payment_intent(request):
+    ''' Create Payment Intent '''
     if request.method == 'POST':
         delivery_method = request.POST.get('delivery_method', 'pickup')
         request.session['delivery_method'] = delivery_method
@@ -68,7 +70,6 @@ def create_payment_intent(request):
                     payment_intent_id
                 )
                 if existing_intent.status == 'succeeded':
-                    # Clear the old one — it's already paid
                     del request.session['payment_intent_id']
                     payment_intent_id = None
             except stripe.error.InvalidRequestError:
@@ -112,6 +113,7 @@ def create_payment_intent(request):
 
 
 def checkout(request):
+    ''' Handles the checkout process for placing an order '''
     stripe_public_key = settings.STRIPE_PUBLIC_KEY
     stripe_secret_key = settings.STRIPE_SECRET_KEY
     order = None
@@ -249,7 +251,7 @@ def checkout(request):
             try:
                 intent = stripe.PaymentIntent.retrieve(payment_intent_id)
             except stripe.error.InvalidRequestError:
-                # If somehow the ID is invalid or expired, create a new one
+                # If ID is invalid or expired, create a new one
                 intent = stripe.PaymentIntent.create(
                     amount=stripe_total,
                     currency=settings.STRIPE_CURRENCY,
@@ -286,9 +288,7 @@ def checkout(request):
 
 
 def checkout_success(request, order_number):
-    """
-    Handle successful checkouts
-    """
+    ''' Handles successful checkouts '''
     save_info = request.session.get('save_info')
     order = get_object_or_404(Order, order_number=order_number)
 
