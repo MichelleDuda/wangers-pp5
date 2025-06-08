@@ -1,6 +1,6 @@
 # WANGERS
 
-![Wangers](static/documentation/wangers.jpg)
+![Wangers](media/readme/wangers.jpg)
 Link to Live Site: [Wangers Website](https://wangers-d543b0386356.herokuapp.com/)
 
 ## Index - Table of Contents
