@@ -1,0 +1,6 @@
+User-agent: *
+Disallow: /accounts/
+Disallow: /cart/
+Disallow: /checkout/
+Disallow: /profiles/
+Sitemap: https://wangers-d543b0386356.herokuapp.com/sitemap.xml
