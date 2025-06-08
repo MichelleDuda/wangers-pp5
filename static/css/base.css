@@ -138,6 +138,11 @@ z-index: 1000;
     }
 }
 
+.authentication-text {
+    color: darkslategray;
+    font-size: .75rem;
+}
+
 /* ------------------------------------------------------------------------------------- Footer styles */
 footer {
     border-top: 2px dotted #dfcfdc;
