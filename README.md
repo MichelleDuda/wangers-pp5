@@ -139,16 +139,29 @@ The databse for the  ***Wangers Website** is designed to efficiently manage cust
 
 The core entities in the database include:
 
-- Users: Users are linked to their respective meal orders.
-- 
-- 
-- 
-- 
-- 
+- User: Represents each user and is linked to profile, reviews, and order models to track account activity. 
+
+- UserProfile: Linked to a user, storing default delivery and contact details. 
+
+- MenuItem: Contains menu options categorized by type (e.g., Wings, Sandwiches, Side Dishes), with descriptions, pricing, availability, related sauces, dietary restrictions, and add-ons.
+
+- Sauce: Represents sauce options that can be linked to multiple MenuItems (many-to-many relationship).
+
+- AddOn: Represents optional extras available for MenuItems (many-to-many relationship), allowing customers to customize their meals.
+
+- Order: Stores details of each meal order placed by a user, including delivery information, order totals, and timestamps. Each order is linked to a user if they are authenticated at the time they place the order. 
+
+- OrderLineItem: Contains individual menu item selections within an Order, including the specific MenuItem, quantity, selected sauces, add-ons, and line item totals.
+
+- Review: Allows users to rate and comment on MenuItems, providing feedback. Reviews are linked to both users and menu items.
+
+- Contact: Captures messages and inquiries from users or visitors, storing contact details and message content.
+
+- Newsletter: Manages subscriptions to email newsletters, tracking subscriber emails.
 
 This relational structure ensures data integrity and allows for efficient retrieval of menu items, optional extras, current & past orders, and dietary restrictions. 
 
-<img src="static/documentation/ERD.jpeg">
+<img src="media/readme/erd.jpg">
 
 
 ## Features
