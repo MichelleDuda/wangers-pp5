@@ -359,7 +359,44 @@ It is recommended that these tests are run using a temporary email from a site s
 | Deleting products | While authenticated as a superuser, navigate to the Menu Page (or Menu Detail page), and select the Delete link. Update the pre-populated form and submit it. | The user is redirected to a buffer page asking them to confirm the deletion. If a user cancels, they are redirected back to the page they came from. If they choose to delete, an alert informs of successful deletion and the user is redirected to the menu page. | Pass    |
 
 
+## User Story Testing
 
+### Site Owner Goals
+1. The use of Bootstrap and custom CSS, along with vibrant food imagery and bold typography, delivers a visually striking and on-brand site that reflects Wangers’ fun, flavorful identity.
+2. The fixed-top navbar creates an easily navigable layout, while colorful buttons across the site draw the user's attention to important links and actions.
+3. The homepage selling points and About page clearly communicate the brand’s story and value. Key information like menu and pricing is easily accessible via the “View Menu” button overlaying the hero image.
+4. The checkout process is secure and user-friendly. Customers can order as guests or register for an account. Secure payments via Stripe and proper form validation ensure data protection and a smooth user experience.
+
+### First Time User Goals
+1. I am able to quickly understand what Wangers offers, as the homepage features a bold food image with a clear, informative text overlay and a short description of services below.
+2. I am able to easily find key information, such as the menu, hours, and location, via the homepage layout and buttons, especially the one overlaying the hero image.
+3. I am able to check out without creating an account, thanks to the guest checkout feature that simplifies the ordering process.
+4. I am able to register for an account easily, using the clearly labeled “Register” link in the navbar for faster ordering in the future.
+
+### Returning User Goals
+1. I am able to log in quickly using the “Log In” link in the navbar.
+2. I am able to view my previous orders by accessing the “Order History” section in my profile page, where each order is listed with date and details.
+3. I am able to leave a review via the Reviews page which is easily found via the navbar.
+4. I am able to easily add items to my cart and checkout. After entering my payment information I recieve a confirmation email as well as being redirected to a confirmation page. 
+
+### KANBAN Board User Story Testing
+1. Account Registration - A user is able to easily register for the site via the Registration link in the My Profile dropdown of the navigation bar. The user then receives an email to verify their email address, and once the link is clicked and registration is finalized the user can succssfully log into their account. 
+2. Account Log In/Out - As an unauthenticated user the My Profile dropdown contains a link to Register or Log In. Once a user is logged in this menu updates to include links to the user's profile where they can update delivery informaiton or view past orders, as well as a link to sign out of their account. Clicking on the sign out link brings users to another page where they are asked to confirm whether or not they wish to sign out. An added feature in the navigation bar for better visibility of authentication status is a banner below the cart and account icons that changes based on a user's authentication status saying either they are not currently logged in or that they are logged in as *username*.
+3. Potential User UX - A company logo and navigation bar as visible when the user first logs in, creating a easily navigable page. The user is easily able to tell the purpose of the site via the hero image and text overlay. The text overlay also contains a button that links to the menu page for ease of access. The footer of each page contains our location so users can easily determine if they are within the geographical area of the restaurant. 
+4. Contact Infomration - A footer is visible on every page of the website including the location, hours, phone number and links to social media. 
+5. ADMIN Add & Update Products - As an authenticated superuser, extra features become available. The My Profile dropdown in the navbar now contains a link to Menu Management - which contains a form to add new items to the menu. In addition, the menu & menu details pages contain links to either update or delete a menu item. The delete option also contains a buffer page confirming with the admin user that they wish to delete the item. 
+6. Filter for Dietary Needs - The menu page contains a filter option that reloads the menu page with only items that coincide with the dietatry restriction selected from the dropdown. 
+7. Add Items to Cart - As either a guest or an authenticated user, items can be added to the cart via the menu detail page. From this page a user has the ability to change the quanitity, select a sauce, and add optional add ons. The add to cart button has been fully tested. 
+8. Online Payment - Stripe has been fully integrated and tested to allow for online payments.
+9. View Cart Total - The navigation bar contains a cart feature with a total that automatically updates each time items are added or removed from the cart.  
+10. Menu Search - A search box is clearly visible on the top of the menu page. After typing in a search term and submitting the query the menu page is reloaded with only items whose name or description match the search criteria. If nothing matches an alert is displayed telling the user that we don't have that yet and providing them a link to our contact page so they can reach out and suggest it to us. 
+11. Menu - The Menu page is easily accessible via a link labled Menu in the navigation bar, and through the Order Now button on the hero image of the homepage. Once on this page a user can see all items in the menu, categorized by type as well as the item's name, price, and a picture of the item. Clicking on the item renders the detail page with additional information such as description, dietary needs, additional add ons and sauce flavors. 
+12. Update & Delete Cart Items - The cart page contains a quantity box with increment/decrement buttons, as well as an update and delete button. Users can update the quantity of an item by adjusting the quantity box and clicking update, or delete a line item by clicking the delete button. No buffer exists on this page in order to make the experience smoother. An accidental deletion here is easily fixable by the user simply re-adding the item to the cart. 
+13. Checkout - The checkout page allows users to chose between delivery methods of pickup or delivery. The toggler dynamically updates the delivery fee and grand total of the order. If pickup is selected, the address fields are also grayed out on the order form as they are no longer required. Once an order is processed the user is redirected to a confirmation page containing their order details and a confirmation number. A webhook will verify the order is in the database and send an actual email to the user confirming their order as well. 
+14. User Profile - While authenticated a user is able to navigate to a Profile page via the My Account dropdown in the navigation bar. On this page a user can update their user profile information and view a list of all their past orders. 
+15. Write a Review / Edit or Delete Review - The review page contains a button to direct users to a review form. If a user is not authenticated, it redirects them to either register or log in. If they are authenticated it renders the review form. After a review is submitted it is not immediately visible on the site but is rather marked as not approved. Once an admin approves the reveiw it is visible. While on the reviews page, if authenticated, a user will see edit and delete buttons available under the posts that they are the author of. Editing of a view changes the approved field to False triggering the review to be pulled from the page until it is re-approved by admin.
+16. Contact - A Contact page is easily accessible via the navigation bar. Authentication is not required for submission. 
+17. Newsletter - The homepage of the website contains a section where anyone with a valid email address can sign up to recieve a newsletter. 
 
 
 ## Browser Compatibility
