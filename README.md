@@ -17,13 +17,13 @@ Link to Live Site: [Wangers Website](https://wangers-d543b0386356.herokuapp.com/
     * [Logo & Navigation bar](#logo-and-navigation-bar)
     * [Home Page](#home-page)
     * [Menu Page](#menu-page)
-    * [Menu Item Detail Page](#menu-item-detail-page)
-    * [Review List Page](#review-list-page)
-    * [Review Form Page](#review-form-page)
-    * [Contact Us Page](#contact-us-page)
-    * [Admin Menu Management Pages](#admin-menu-management-pages)
-    * [Profile Page](#profile-page)
+    * [Menu Detail Page](#menu-detail-page)
+    * [Cart & Checkout Pages](#cart--checkout-pages)
     * [User Authentication Pages](#user-authentication-pages)
+    * [Profile Page](#profile-page)
+    * [User Reviews Page](#user-reviews-page)
+    * [Contact/Feedback Page](#contactfeeback-page)
+    * [User Feedback Messages](#user-feedback-messages)
     * [Future Features](#future-features)
 * [Marketing & SEO](#marketing--seo)
 * [Agile Methodology](#agile-methodology)
@@ -208,7 +208,7 @@ This relational structure ensures data integrity and allows for efficient retrie
 
 <img src="media/readme/menu_ss.jpg">
 
-### Menu Detial Page
+### Menu Detail Page
 - The Menu Detail page is where users can add items to their cart. 
 - Users will be directed to this page after clicking on a specific item on the Menu page.
 - All relevant information about the item is listed here including name, image,description, price, and dietary information.
@@ -218,6 +218,13 @@ This relational structure ensures data integrity and allows for efficient retrie
 
 <img src="media/readme/menu_detail_ss.jpg">
 
+### Cart & Checkout Pages
+- The Cart page contains a table view of all items currently in the users cart. 
+- Users are able to adjust quantity or delete items from their cart on this page. 
+- A checkout button redirects them to the checkout page, where they can select delivery method, enter details, and securely checkout with a credit card. 
+
+<img src="media/readme/cart_ss.jpg">
+<img src="media/readme/checkout_ss.jpg">
 
 ### User Authentication Pages
 - The site contains three main user authentication pages: Registration, Log In, and Log Out.
@@ -251,6 +258,9 @@ This relational structure ensures data integrity and allows for efficient retrie
 
 ### User Feedback Messages
 - Feedback messages are present throughout the site to confirm to a user that they were successful in signing in, signing out, placing an order, updating an order, updating their profile, etc. 
+
+### Admin CRUD Pages
+- When authenticated as a superuser, access is provided to forms that allow the user to add, edit or delete menu items in the database without having to access the database admin panel. 
 
 ### Future Features
 1.  Special Offers & Discounts - A section containing special offers can be used to feature meal deals, game day specials, as well as other coupons and promotions to entice users to order. 

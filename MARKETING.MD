@@ -77,9 +77,7 @@ I tested several long-tail keywords using the website [Wordtracker](https://www.
 
 ## Research of similar businesses
 
-
-
-
+Extensive research was done on other businesses in the area such as Buffalo Wild Wings & Wingstop.
 
 ## SEO Improvements
 
@@ -126,3 +124,5 @@ Wangers will register with Google My Business to appear in local map searches (�
 We’ll also explore adding Wangers to local food apps and directories for extended visibility—especially during peak times like weekends and major sports events.
 
 ### Email Marketing - Newsletter
+
+A newsletter signup form was included on the homepage. At this time no actual newsletter is sent out. Email addresses are stored in a table in the database for easy extraction for any possible software integration at a later date. 
